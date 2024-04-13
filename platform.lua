@@ -14,7 +14,7 @@ function platform_create(x, y, width, height)
     platform.body      = love.physics.newBody(b2d_world, x, y, "static")
     platform.shape     = love.physics.newRectangleShape(platform.width, platform.height)
     platform.fixture   = love.physics.newFixture(platform.body, platform.shape)
-    platform.fixture:setFriction(0.4)
+    platform.fixture:setFriction(0)
     platform.fixture:setUserData(platform)
 
     local left_border = {}

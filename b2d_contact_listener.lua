@@ -1,67 +1,72 @@
 function beginContact(a, b, coll)
-	if a:getUserData().type == "player" and b:getUserData().type == "platform_up" then
-		a:getUserData().jumpCounter = 0
-	end
-	if a:getUserData().type == "platform_up" and b:getUserData().type == "player" then
-		b:getUserData().jumpCounter = 0
-	end
+	if a:getUserData().type == "player" or b:getUserData().type == "player" then
+		local player = {}
+		local other = {}
+		if a:getUserData().type == "player" then 
+			player = a:getUserData()
+			other = b:getUserData()
+		else 
+			other = a:getUserData()
+			player = b:getUserData()
+		end
 
-	if a:getUserData().type == "platform_left" and b:getUserData().type == "player" then
-		b:getUserData().wallstick = -1
-		b:getUserData().jumpCounter = 1
-	end
-	if a:getUserData().type == "player" and b:getUserData().type == "platform_left" then
-		a:getUserData().wallstick = -1
-		a:getUserData().jumpCounter = 1
-	end
-	if a:getUserData().type == "platform_right" and b:getUserData().type == "player" then
-		b:getUserData().wallstick = 1
-		b:getUserData().jumpCounter = 1
-	end
-	if a:getUserData().type == "player" and b:getUserData().type == "platform_right" then
-		a:getUserData().wallstick = 1
-		a:getUserData().jumpCounter = 1
+		-- Игроки ходят сквозь друг друга
+		if other.type == "player" then coll:setEnabled(false) end
+		-- Игрок стоит на платформе, обновляем доступность прыжков
+		if other.type == "platform_up" then 
+			player.jumpCounter = 0
+		end
+		-- Коллайдеры для прилипания к платформам
+		if other.type == "platform_left" then
+			player.jumpCounter = 0
+			player.wallstick = -1
+		end
+		-- Коллайдеры для прилипания к платформам
+		if other.type == "platform_right" then
+			player.jumpCounter = 0
+			player.wallstick = 1
+		end
 	end
 end
 
 function endContact(a, b, coll)
-	if a:getUserData().type == "player" and b:getUserData().type == "platform_up" then
-		a:getUserData().jumpCounter = 1
-	end
-	if a:getUserData().type == "platform_up" and b:getUserData().type == "player" then
-		b:getUserData().jumpCounter = 1
-	end
+	if a:getUserData().type == "player" or b:getUserData().type == "player" then
+		local player = {}
+		local other = {}
+		if a:getUserData().type == "player" then 
+			player = a:getUserData()
+			other = b:getUserData()
+		else 
+			other = a:getUserData()
+			player = b:getUserData()
+		end
 
-	if a:getUserData().type == "platform_left" and b:getUserData().type == "player" then
-		b:getUserData().wallstick = 0
-		b:getUserData().jumpCounter = 1
-	end
-	if a:getUserData().type == "player" and b:getUserData().type == "platform_left" then
-		a:getUserData().wallstick = 0
-		a:getUserData().jumpCounter = 1
-	end
-	if a:getUserData().type == "platform_right" and b:getUserData().type == "player" then
-		b:getUserData().wallstick = 0
-		b:getUserData().jumpCounter = 1
-	end
-	if a:getUserData().type == "player" and b:getUserData().type == "platform_right" then
-		a:getUserData().wallstick = 0
-		a:getUserData().jumpCounter = 1
+		-- Игрок ушёл с платформы, обновляем доступность прыжков
+		if other.type == "platform_up" then 
+			player.jumpCounter = 1
+		end
+		-- Коллайдеры для прилипания к платформам
+		if other.type == "platform_left" or other.type == "platform_right" then
+			player.jumpCounter = 1
+			player.wallstick = 0
+		end
 	end
 end
 
 function preSolve(a, b, coll)
-	if a:getUserData().type == "player" and b:getUserData().type == "platform" then
-		local vx, vy = a:getUserData().body:getLinearVelocity()
-		if vy < 0 then
-			coll:setEnabled(false)
+	if a:getUserData().type == "player" or b:getUserData().type == "player" then
+		local player = {}
+		local other = {}
+		if a:getUserData().type == "player" then 
+			player = a:getUserData()
+			other = b:getUserData()
+		else 
+			other = a:getUserData()
+			player = b:getUserData()
 		end
-	end
-	if a:getUserData().type == "platform" and b:getUserData().type == "player" then
-		local vx, vy = b:getUserData().body:getLinearVelocity()
-		if vy < 0 then
-			coll:setEnabled(false)
-		end
+
+		-- Игроки ходят сквозь друг друга
+		if other.type == "player" then coll:setEnabled(false) end
 	end
 end
 
