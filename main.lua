@@ -3,6 +3,7 @@ local class = require("Luaoop").class
 require 'load_assets'
 require 'player'
 require 'platform'
+require 'b2d_contact_listener'
 
 -- This function is called exactly once at the beginning of the game.
 function love.load(args)
@@ -10,13 +11,15 @@ function love.load(args)
 
     -- Физика
     love.physics.setMeter(60)
-    b2d_world = love.physics.newWorld(0, 1600, true)
+    b2d_world = love.physics.newWorld(0, 100, true)
+    b2d_world:setCallbacks(beginContact, endContact, preSolve, postSolve)
 
     for y = 0,5 do
         for x = 0, 3 do
             platform_create(50 + x * 600 + (y % 2) * 300, 200 + 150 * y, 150, 150)
         end
     end
+    platform_create(1920 / 2, 200, 1920, 40)
 end
 	
 -- Callback function used to update the state of the game every frame.
