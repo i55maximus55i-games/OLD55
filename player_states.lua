@@ -74,6 +74,7 @@ player_states["punch"].frames[1].textures = {}
 player_states["punch"].frames[1].textures[0] = ASSETS[1].jab[2]
 player_states["punch"].frames[1].hitbox = {x=-15,y=-30,w=30,h=60}
 player_states["punch"].frames[1].hurtbox = {active=true, x=20,y=0,w=30, h=30}
+player_states["punch"].frames[1].damage_vector = {x=1000, y=-1000}
 player_states["punch"].frames[2] = {} 
 player_states["punch"].frames[2].textures = {} 
 player_states["punch"].frames[2].textures[0] = ASSETS[1].jab[3]
@@ -84,6 +85,7 @@ player_states["punch"].frames[3].textures = {}
 player_states["punch"].frames[3].textures[0] = ASSETS[1].jab[4]
 player_states["punch"].frames[3].hitbox = {x=-15,y=-30,w=30,h=60}
 player_states["punch"].frames[3].hurtbox = {active=true, x=20,y=0,w=30, h=30}
+player_states["punch"].frames[3].damage_vector = {x=10000, y=-10000}
 
 player_states["run_punch"] = {}
 player_states["run_punch"].duration = 1

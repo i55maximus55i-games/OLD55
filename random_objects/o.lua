@@ -43,6 +43,9 @@ function URO(dt)
       end
       v:update(dt)
       if v.deleteme then
+        if (not v.nophys) then
+          v.body:destroy()
+        end
         RANDOM_OBJECTS[i] = nil
       end
     end

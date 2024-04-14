@@ -59,6 +59,7 @@ function REMOVE_PLAYER( joystick )
     for i,v in pairs(players) do
         print(joystick, i)
         if joystick == i then
+            players[joystick].body:destroy()
             players[joystick] = nil
         end
     end

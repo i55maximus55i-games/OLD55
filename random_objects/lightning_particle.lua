@@ -15,9 +15,6 @@ return {
     self.scale = math.random(-5,5)*0.25
     self.sprite_index = math.random(1,4)
 
-    -- self.body:setGravityScale(0)
-    -- self.fixture:setSensor(true)
-    -- self.body:setLinearVelocity(math.random(-100,100), math.random(-100,100))
   end,
   update = function (self, dt)
     self.t = self.t + dt

@@ -35,8 +35,8 @@ function beginContact(a, b, coll)
 
 	local ad = a:getUserData()
 	local bd = b:getUserData()
-	if (ad.type == "random" and ad.collide) then print("case ab") ad.collide(a,b) end
-	if (bd.type == "random" and bd.collide) then print("case ba") bd.collide(b,a) end
+	if (ad.type == "random" and ad.collide) then print("case ab", ad.type, bd.type) ad.collide(a,b) end
+	if (bd.type == "random" and bd.collide) then print("case ba", ad.type, bd.type) bd.collide(b,a) end
 end
 
 function endContact(a, b, coll)

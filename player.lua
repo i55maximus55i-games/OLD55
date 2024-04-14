@@ -200,8 +200,21 @@ end
 
 -- player1 тот кто въебал
 -- player2 тот кому въебали
-function player_hit(player1, player2)
+---comment
+---@param attacker Player
+---@param defender Player
+function player_hit(attacker, defender)
+    local active_state = player_states[attacker.state]
 
+    defender.body:applyLinearImpulse(0, -1000)
+    if (active_state.damage_vector) then
+        local v = active_state.damage_vector
+        defender.body:applyLinearImpulse(v.x*attacker.dir, v.y)
+        print('a')
+        
+    end
+
+    print('ъуъ')
 end
 
 function player_control(joystick, butt, pressed)
