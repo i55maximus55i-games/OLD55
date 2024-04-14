@@ -137,8 +137,11 @@ function player_update(dt)
         if player.stun < 0 then
             -- ходит/бегит
             if player.state == "punch" then left_x = 0 end
-            if player.state == "run_punch" or player.state == "slide" then
+            if player.state == "run_punch" then
                 left_x = player.dir
+            end
+            if player.state == "slide" then
+                left_x = player.dir * 2
             end
             if player.state == "ass" or player.state == "upper" then
                 left_x = 0
