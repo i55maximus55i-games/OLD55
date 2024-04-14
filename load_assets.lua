@@ -82,7 +82,7 @@ local animation_list= {
     }
 }
 
-PLAYER_COUNT = 1
+PLAYER_COUNT = 2
 
 ASSETS = {}
 function LOAD_PLAYER_ASSETS() 
