@@ -94,7 +94,7 @@ function player_update(dt)
             if player.state == "jump" then 
                 player.stateTimer = 0.15 
             end
-            if player.state == "idle" or player.state == "walk" or player.state == "run" then
+            if player.state == "idle" or player.state == "walk" or player.state == "run" or player.state == "run_punch" then
                 player.stateTimer = 0
             end
         end
@@ -104,22 +104,34 @@ function player_update(dt)
         if player.stun < 0 then
             -- ходит/бегит
             local targetSpeed = left_x * player.maxSpeedWalk
+            if player.state == "punch" then left_x = 0 end
             if math.abs(left_x) > 0.1 then
-                if left_x > 0 then player.dir = 1 else player.dir = -1 end
-                if not player.isJump then
-                    if player.run then 
-                        player.state = "run" 
-                    else 
-                        player.state = "walk"
+                if player.state ~= "punch" then 
+                    if left_x > 0 then player.dir = 1 else player.dir = -1 end
+                    if not player.isJump then
+                        if player.run then 
+                            if player.state == "run_punch" then
+                                
+                            else 
+                                player.state = "run" 
+                            end
+                        else 
+                            player.state = "walk"
+                        end
+                    else
+                        player.state = "jump"
                     end
-                else
-                    player.state = "jump"
                 end
             else
-                if player.isJump then player.state = "jump" else player.state = "idle" end
-                player.stateTimer = 0
+                if player.state ~= "punch" then 
+                    if player.isJump then player.state = "jump" else 
+                        player.state = "idle" 
+                        player.stateTimer = 0
+                    end
+                end
             end
             if player.run then targetSpeed = left_x * player.maxSpeedRun end
+
             local mass = player.body:getMass()
             local acceleration = (targetSpeed - vx) / dt
             if acceleration < -player.acceleration then acceleration = -player.acceleration end
@@ -195,7 +207,7 @@ function player_control(joystick, butt, pressed)
     local player = players[joystick]
     
     -- бегит
-    if butt == 2 then
+    if butt >= 5 and butt <= 8 then
         player.run = pressed
         player.stateTimer = 0
     end
@@ -231,9 +243,16 @@ function player_control(joystick, butt, pressed)
     -- Пиздинг
     if butt == 2 then
         if pressed then
-            if player.state == "idle" then
-                player.state = "punch"
-                player.stateTimer = 0
+            if not player.isJump then
+                if player.state == "idle" or player.state == "walk" then
+                    player.state = "punch"
+                    player.stateTimer = 0
+                end
+                if player.state == "run" then 
+                    player.state = "run_punch"
+                    player.stateTimer = 0
+                    player.body:applyLinearImpulse(0, -140)
+                end
             end
         end
     end

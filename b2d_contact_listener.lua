@@ -13,9 +13,13 @@ function beginContact(a, b, coll)
 		-- Игроки ходят сквозь друг друга
 		if other.type == "player" then coll:setEnabled(false) end
 		-- Игрок стоит на платформе, обновляем доступность прыжков
-		if other.type == "platform_up" then 
+		if other.type == "platform_up" then
 			player.jumpCounter = 0
 			player.isJump = false
+			if player.state == "run_punch" then
+				player.state = "run"
+				player.stateTimer = 0
+			end
 		end
 		-- Коллайдеры для прилипания к платформам
 		if other.type == "platform_left" then
@@ -44,9 +48,13 @@ function endContact(a, b, coll)
 
 		-- Игрок ушёл с платформы, обновляем доступность прыжков
 		if other.type == "platform_up" then 
-			player.isJump = true
-			if player.jumpCounter == 0 then player.stateTimer = 0.15 else player.stateTimer = 0 end
-			player.jumpCounter = 1
+			if player.state == "run_punch" then
+				
+			else 
+				player.isJump = true
+				if player.jumpCounter == 0 then player.stateTimer = 0.15 else player.stateTimer = 0 end
+				player.jumpCounter = 1
+			end
 		end
 		-- Коллайдеры для прилипания к платформам
 		if other.type == "platform_left" or other.type == "platform_right" then

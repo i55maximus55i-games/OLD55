@@ -37,8 +37,8 @@ function platform_create(x, y, width, height)
 
     local up_border = {}
     up_border.type    = "platform_up"
-    up_border.body    = love.physics.newBody(b2d_world, x, y - height / 2 - 2, "static")
-    up_border.shape   = love.physics.newRectangleShape(width - 2, 4)
+    up_border.body    = love.physics.newBody(b2d_world, x, y - height / 2 - 1, "static")
+    up_border.shape   = love.physics.newRectangleShape(width - 2, 2)
     up_border.fixture = love.physics.newFixture(up_border.body, up_border.shape)
     up_border.fixture:setSensor(true)
     up_border.fixture:setUserData(up_border)

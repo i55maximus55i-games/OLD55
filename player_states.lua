@@ -56,12 +56,12 @@ player_states["wallSlide"].frames = {}
 player_states["wallSlide"].frames[0] = {} 
 player_states["wallSlide"].frames[0].textures = {} 
 player_states["wallSlide"].frames[0].textures[0] = ASSETS[1].wallhang[1]
-player_states["wallSlide"].frames[0].hitbox = {x=0,y=0,w=40,h=60}
+player_states["wallSlide"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
 player_states["wallSlide"].frames[0].hurtbox = {active=false}
 player_states["wallSlide"].frames[0].tex_offset = {x=-10,y=0}
 
 player_states["punch"] = {}
-player_states["punch"].duration = 2
+player_states["punch"].duration = 0.35
 player_states["punch"].length = 4
 player_states["punch"].frames = {}
 player_states["punch"].frames[0] = {} 
@@ -84,6 +84,16 @@ player_states["punch"].frames[3].textures = {}
 player_states["punch"].frames[3].textures[0] = ASSETS[1].jab[4]
 player_states["punch"].frames[3].hitbox = {x=-15,y=-30,w=30,h=60}
 player_states["punch"].frames[3].hurtbox = {active=true, x=20,y=0,w=30, h=30}
+
+player_states["run_punch"] = {}
+player_states["run_punch"].duration = 1
+player_states["run_punch"].length = 1
+player_states["run_punch"].frames = {}
+player_states["run_punch"].frames[0] = {} 
+player_states["run_punch"].frames[0].textures = {} 
+player_states["run_punch"].frames[0].textures[0] = ASSETS[1].shoulder[1]
+player_states["run_punch"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
+player_states["run_punch"].frames[0].hurtbox = {active=true, x = 20, y = -20, w = 40, h = 40}
 
 player_states["jump"] = {}
 player_states["jump"].duration = 0.2
