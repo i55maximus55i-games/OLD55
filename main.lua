@@ -5,6 +5,8 @@ require 'player'
 require 'platform'
 require 'b2d_contact_listener'
 
+debugRender = true
+
 -- This function is called exactly once at the beginning of the game.
 function love.load(args)
     -- Физика

@@ -5,6 +5,7 @@ players = {}
 player_width = 40
 player_height = 60
 
+
 player_states = {}
 player_states["idle"] = {}
 player_states["idle"].duration = 1
@@ -13,6 +14,9 @@ player_states["idle"].tiles = {}
 player_states["idle"].tiles[0] = {} 
 player_states["idle"].tiles[0].textures = {} 
 player_states["idle"].tiles[0].textures[0] = blue_idle
+player_states["idle"].tiles[0].hitbox = {x=-15,y=-30,w=30,h=60}
+player_states["idle"].tiles[0].hurtbox = {active=false}
+
 player_states["wallSlime"] = {}
 player_states["wallSlime"].duration = 1
 player_states["wallSlime"].length = 1
@@ -20,6 +24,33 @@ player_states["wallSlime"].tiles = {}
 player_states["wallSlime"].tiles[0] = {} 
 player_states["wallSlime"].tiles[0].textures = {} 
 player_states["wallSlime"].tiles[0].textures[0] = blue_wallslime
+player_states["wallSlime"].tiles[0].hitbox = {x=0,y=0,w=40,h=60}
+player_states["wallSlime"].tiles[0].hurtbox = {active=false}
+
+player_states["punch"] = {}
+player_states["punch"].duration = 2
+player_states["punch"].length = 4
+player_states["punch"].tiles = {}
+player_states["punch"].tiles[0] = {} 
+player_states["punch"].tiles[0].textures = {} 
+player_states["punch"].tiles[0].textures[0] = green_jab[1]
+player_states["punch"].tiles[0].hitbox = {x=-15,y=-30,w=30,h=60}
+player_states["punch"].tiles[0].hurtbox = {active=false}
+player_states["punch"].tiles[1] = {} 
+player_states["punch"].tiles[1].textures = {} 
+player_states["punch"].tiles[1].textures[0] = green_jab[2]
+player_states["punch"].tiles[1].hitbox = {x=-15,y=-30,w=30,h=60}
+player_states["punch"].tiles[1].hurtbox = {active=true, x=20,y=0,w=30, h=30}
+player_states["punch"].tiles[2] = {} 
+player_states["punch"].tiles[2].textures = {} 
+player_states["punch"].tiles[2].textures[0] = green_jab[3]
+player_states["punch"].tiles[2].hitbox = {x=-15,y=-30,w=30,h=60}
+player_states["punch"].tiles[2].hurtbox = {active=false}
+player_states["punch"].tiles[3] = {} 
+player_states["punch"].tiles[3].textures = {} 
+player_states["punch"].tiles[3].textures[0] = green_jab[4]
+player_states["punch"].tiles[3].hitbox = {x=-15,y=-30,w=30,h=60}
+player_states["punch"].tiles[3].hurtbox = {active=true, x=20,y=0,w=30, h=30}
 
 function player_create(joystick, x, y)
     local player = {}
@@ -58,9 +89,26 @@ function player_draw()
         local state = v.state
         local playerSpriteIndex = 0 -- TODO
         local spriteIndex = math.floor(v.stateTimer / player_states[state].duration * player_states[state].length)
-        local drawable = player_states[state].tiles[playerSpriteIndex].textures[spriteIndex]
+        local drawable = player_states[state].tiles[spriteIndex].textures[playerSpriteIndex]
+
         love.graphics.draw(drawable, x, y, 0)
-        love.graphics.rectangle("line", v.body:getX() - player_width / 2, v.body:getY() - player_height / 2, player_width, player_height)
+        if debugRender then
+            -- Физичный бох
+            love.graphics.setColor(0.5, 0.5, 0.5, 1)
+            love.graphics.rectangle("line", v.body:getX() - player_width / 2, v.body:getY() - player_height / 2, player_width, player_height)
+            -- Хитбох
+            local hitbox = player_states[state].tiles[spriteIndex].hitbox
+            love.graphics.setColor(0, 1, 0, 1)
+            love.graphics.rectangle("line", v.body:getX() + hitbox.x, v.body:getY() + hitbox.y, hitbox.w, hitbox.h)
+            -- Хуртбох
+            local hurtbox = player_states[state].tiles[spriteIndex].hurtbox
+            if hurtbox.active then
+                love.graphics.setColor(1, 0, 0, 1)
+                love.graphics.rectangle("line", v.body:getX() + hurtbox.x, v.body:getY() + hurtbox.y, hurtbox.w, hurtbox.h)
+            end
+
+            love.graphics.setColor(1,1,1,1)
+        end
     end
 end
 
@@ -71,7 +119,8 @@ function player_update(dt)
 
         player.stateTimer = player.stateTimer + dt
         if player.stateTimer > player_states[player.state].duration then
-            if player.state == "idle" or player.state == "wallSlime" then player.stateTimer = 0 end
+            if player.state == "punch" then player.state = "idle" end
+            player.stateTimer = 0
         end
 
         player.stun = player.stun - dt
@@ -118,35 +167,72 @@ function player_update(dt)
                 player.body:setLinearVelocity(vx, vy)
             end
         end
+
+        -- Проверка хитохуртобоксов
+        local p1_x = player.body:getX()
+        local p1_y = player.body:getY()
+        local state = player.state
+        local spriteIndex = math.floor(player.stateTimer / player_states[state].duration * player_states[state].length)
+        local hurtbox = player_states[state].tiles[spriteIndex].hurtbox
+        if hurtbox.active then
+            p1_x = p1_x + hurtbox.x
+            p1_y = p1_y + hurtbox.y
+            for other_i,other_player in pairs(players) do
+                if i ~= other_i then
+                    local p2_x = other_player.body:getX()
+                    local p2_y = other_player.body:getY()
+                    local state = other_player.state
+                    local spriteIndex = math.floor(other_player.stateTimer / player_states[state].duration * player_states[state].length)
+                    local hitbox = player_states[state].tiles[spriteIndex].hitbox
+                    p2_x = p2_x + hitbox.x
+                    p2_y = p2_y + hitbox.y
+    
+                    if p1_x < p2_x + hitbox.w and p1_x + hurtbox.w > p2_x and p1_y < p2_y + hitbox.h and p1_y + hurtbox.h > p2_y then
+                        player_hit(player, other_player)
+                    end
+                end
+            end
+        end
+    end
+end
+
+-- player1 тот кто въебал
+-- player2 тот кому въебали
+function player_hit(player1, player2)
+end
+
+function player_control(joystick, butt, pressed)
+    local player = players[joystick]
+    -- Прыг
+    if butt == 3 then
+        if pressed then
+            if player.stun < 0 then
+                if player.jumpCounter <= 2 then
+                    player.jumpTimer = 0.3
+                    player.jumpCounter = player.jumpCounter + 1
+                    player.isJump = true
+                end
+            end
+        else
+            player.jumpTimer = 0.0
+            player.jumpCounter = player.jumpCounter + 1
+        end
+    end
+    -- Пиздинг
+    if butt == 2 then
+        if pressed then
+            if player.state == "idle" then
+                player.state = "punch"
+                player.stateTimer = 0
+            end
+        end
     end
 end
 
 function love.joystickpressed(joystick, butt)
-    local player = players[joystick]
-    if butt == 3 then
-        if player.stun < 0 then
-            if player.jumpCounter <= 2 then
-                player.jumpTimer = 0.3
-                player.jumpCounter = player.jumpCounter + 1
-                player.isJump = true
-            end
-        end
-    --     if player.jumpCounter <= 2 then
-    --         player.jumpTimer = 0.3
-    --         player.jumpCounter = player.jumpCounter + 1
-    --         player.body:setLinearVelocity(player.wallstick * 400, -1200)
-    --         player.wallstick_timer = 0.16
-    --         player.wallstick = 0
-    --     end
-    end
+    player_control(joystick, butt, true)
 end
 
 function love.joystickreleased(joystick, butt)
-    local player = players[joystick]
-    if butt == 3 then
-        -- local player = players[joystick]
-        -- player.run = false
-        player.jumpTimer = 0.0
-        player.jumpCounter = player.jumpCounter + 1
-    end
+    player_control(joystick, butt, false)
 end
