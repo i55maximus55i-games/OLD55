@@ -196,7 +196,7 @@ function player_update(dt)
                     p2_x = p2_x + hitbox.x
                     p2_y = p2_y + hitbox.y
     
-                    love.graphics.rectangle("line", v.body:getX() + hurtbox.x * v.dir, v.body:getY() + hurtbox.y, hurtbox.w * v.dir, hurtbox.h)
+                    -- love.graphics.rectangle("line", v.body:getX() + hurtbox.x * v.dir, v.body:getY() + hurtbox.y, hurtbox.w * v.dir, hurtbox.h)
                     if player.dir > 0 then
                         if p1_x < p2_x + hitbox.w and p1_x + hurtbox.w> p2_x and p1_y < p2_y + hitbox.h and p1_y + hurtbox.h > p2_y then
                             player_hit(player, other_player)
