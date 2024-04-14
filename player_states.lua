@@ -15,7 +15,7 @@ player_states["stun"].length = 1
 player_states["stun"].frames = {}
 player_states["stun"].frames[0] = {} 
 player_states["stun"].frames[0].textures = {} 
-player_states["stun"].frames[0].textures[0] = ASSETS[1].fly[1]
+player_states["stun"].frames[0].textures[0] = ASSETS[2].fly[1]
 player_states["stun"].frames[0].hitbox = {x=-1500000,y=-30,w=30,h=60}
 player_states["stun"].frames[0].hurtbox = {active=false}
 
@@ -129,17 +129,17 @@ player_states["slide"].length = 3
 player_states["slide"].frames = {}
 player_states["slide"].frames[0] = {} 
 player_states["slide"].frames[0].textures = {} 
-player_states["slide"].frames[0].textures[0] = ASSETS[1].slide[1]
+player_states["slide"].frames[0].textures[0] = ASSETS[2].slide[1]
 player_states["slide"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
 player_states["slide"].frames[0].hurtbox = {active=false}
 player_states["slide"].frames[1] = {} 
 player_states["slide"].frames[1].textures = {} 
-player_states["slide"].frames[1].textures[0] = ASSETS[1].slide[2]
+player_states["slide"].frames[1].textures[0] = ASSETS[2].slide[2]
 player_states["slide"].frames[1].hitbox = {x=-15,y=-30,w=30,h=60}
 player_states["slide"].frames[1].hurtbox = {active=false}
 player_states["slide"].frames[2] = {} 
 player_states["slide"].frames[2].textures = {} 
-player_states["slide"].frames[2].textures[0] = ASSETS[1].slide[3]
+player_states["slide"].frames[2].textures[0] = ASSETS[2].slide[3]
 player_states["slide"].frames[2].hitbox = {x=-15,y=-30,w=30,h=60}
 player_states["slide"].frames[2].hurtbox = {active=true, x=20,y=0,w=30, h=30}
 player_states["slide"].frames[2].damage_vector = {x=100, y=-100}
@@ -150,17 +150,17 @@ player_states["sexkick"].length = 3
 player_states["sexkick"].frames = {}
 player_states["sexkick"].frames[0] = {} 
 player_states["sexkick"].frames[0].textures = {} 
-player_states["sexkick"].frames[0].textures[0] = ASSETS[1].sexkick[1]
+player_states["sexkick"].frames[0].textures[0] = ASSETS[2].sexkick[1]
 player_states["sexkick"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
 player_states["sexkick"].frames[0].hurtbox = {active=false}
 player_states["sexkick"].frames[1] = {} 
 player_states["sexkick"].frames[1].textures = {} 
-player_states["sexkick"].frames[1].textures[0] = ASSETS[1].sexkick[2]
+player_states["sexkick"].frames[1].textures[0] = ASSETS[2].sexkick[2]
 player_states["sexkick"].frames[1].hitbox = {x=-15,y=-30,w=30,h=60}
 player_states["sexkick"].frames[1].hurtbox = {active=false}
 player_states["sexkick"].frames[2] = {} 
 player_states["sexkick"].frames[2].textures = {} 
-player_states["sexkick"].frames[2].textures[0] = ASSETS[1].sexkick[3]
+player_states["sexkick"].frames[2].textures[0] = ASSETS[2].sexkick[3]
 player_states["sexkick"].frames[2].hitbox = {x=-15,y=-30,w=30,h=60}
 player_states["sexkick"].frames[2].hurtbox = {active=true, x = 20, y = -20, w = 40, h = 40}
 player_states["sexkick"].frames[2].damage_vector = {x=100, y=-100}
@@ -171,7 +171,7 @@ player_states["ass"].length = 1
 player_states["ass"].frames = {}
 player_states["ass"].frames[0] = {} 
 player_states["ass"].frames[0].textures = {} 
-player_states["ass"].frames[0].textures[0] = ASSETS[1].ass[1]
+player_states["ass"].frames[0].textures[0] = ASSETS[2].ass[1]
 player_states["ass"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
 player_states["ass"].frames[0].hurtbox = {active=true, x = -20, y = 20, w = 40, h = 40}
 player_states["ass"].frames[0].damage_vector = {x=100, y=-100}
@@ -182,17 +182,17 @@ player_states["upper"].length = 3
 player_states["upper"].frames = {}
 player_states["upper"].frames[0] = {} 
 player_states["upper"].frames[0].textures = {} 
-player_states["upper"].frames[0].textures[0] = ASSETS[1].sexkick[1]
+player_states["upper"].frames[0].textures[0] = ASSETS[2].sexkick[1]
 player_states["upper"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
 player_states["upper"].frames[0].hurtbox = {active=false}
 player_states["upper"].frames[1] = {} 
 player_states["upper"].frames[1].textures = {} 
-player_states["upper"].frames[1].textures[0] = ASSETS[1].sexkick[2]
+player_states["upper"].frames[1].textures[0] = ASSETS[2].sexkick[2]
 player_states["upper"].frames[1].hitbox = {x=-15,y=-30,w=30,h=60}
 player_states["upper"].frames[1].hurtbox = {active=true, x = 20, y = -20, w = 40, h = 40}
 player_states["upper"].frames[2] = {} 
 player_states["upper"].frames[2].textures = {} 
-player_states["upper"].frames[2].textures[0] = ASSETS[1].sexkick[3]
+player_states["upper"].frames[2].textures[0] = ASSETS[2].sexkick[3]
 player_states["upper"].frames[2].hitbox = {x=-15,y=-30,w=30,h=60}
 player_states["upper"].frames[2].hurtbox = {active=true, x = 20, y = -20, w = 40, h = 40}
 player_states["upper"].frames[2].damage_vector = {x=100, y=-100}
