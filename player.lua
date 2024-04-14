@@ -194,7 +194,7 @@ function player_update(dt)
                             player_hit(player, other_player)
                         end
                     else
-                        if p1_x - hurtbox.x * 2 < p2_x + hitbox.w and p1_x - hurtbox.x * 2 + hurtbox.w > p2_x and p1_y < p2_y + hitbox.h and p1_y + hurtbox.h > p2_y then
+                        if p1_x - hurtbox.x * 4 < p2_x + hitbox.w and p1_x - hurtbox.x * 4 + hurtbox.w > p2_x and p1_y < p2_y + hitbox.h and p1_y + hurtbox.h > p2_y then
                             player_hit(player, other_player)
                         end
                     end
