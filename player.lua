@@ -375,7 +375,15 @@ function love.joystickpressed(joystick, butt)
 
         if ( not exists ) then
             -- player_create(joystick, 100, 0)
-            CRO(lightning, {j = joystick},  1920 / 2 / 1.2 - 30, 0)
+            local may_spawn = true
+            for _, object in pairs(RANDOM_OBJECTS) do
+                if object and object.j ~= joystick then
+                    may_spawn = false
+                end
+            end
+            if may_spawn then
+                CRO(lightning, {j = joystick},  1920 / 2 / 1.2 - 30, 0)
+            end
         end
     end
     player_control(joystick, butt, true)
