@@ -26,6 +26,8 @@ function beginContact(a, b, coll)
 			end
 			if player.state == "ass" then
 				player.state = "idle"
+				local vx, vy = player.body:getLinearVelocity()
+				player.body:setLinearVelocity(vx, -120)
 				player.stateTimer = 0
 			end
 		end
