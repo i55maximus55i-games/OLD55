@@ -63,6 +63,7 @@ function endContact(a, b, coll)
 		if other.type == "platform_up" then 
 			if player.state == "run_punch" then
 			elseif player.state == "sexkick" then
+			elseif player.state == "upper" then
 			else 
 				player.isJump = true
 				if player.jumpCounter == 0 then player.stateTimer = 0.15 else player.stateTimer = 0 end
