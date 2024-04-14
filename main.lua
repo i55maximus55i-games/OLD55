@@ -103,6 +103,7 @@ function love.draw()
 
 
     love.graphics.print("Ахмыл", 1200, -10, 0, 4 / 1.2, 4 / 1.2)
+    dead = true
     for i,v in pairs(players) do
         if v.index == 4 then 
             dead = false
