@@ -27,6 +27,7 @@ player_states["wallSlide"].frames[0].textures = {}
 player_states["wallSlide"].frames[0].textures[0] = ASSETS[1].wallhang[1]
 player_states["wallSlide"].frames[0].hitbox = {x=0,y=0,w=40,h=60}
 player_states["wallSlide"].frames[0].hurtbox = {active=false}
+player_states["wallSlide"].frames[0].tex_offset = {x=-10,y=0}
 
 player_states["punch"] = {}
 player_states["punch"].duration = 2
@@ -99,8 +100,9 @@ function player_draw()
         local playerSpriteIndex = 0 -- TODO
         local spriteIndex = math.floor(v.stateTimer / player_states[state].duration * player_states[state].length)
         local drawable = player_states[state].frames[spriteIndex].textures[playerSpriteIndex]
+        local offsets = player_states[state].frames[spriteIndex].tex_offset or {x=0,y=0}
 
-        love.graphics.draw(drawable, x-v.dir*20, y, 0, 2*v.dir,2)
+        love.graphics.draw(drawable, x-v.dir*player_width+offsets.x*v.dir, y-player_height+10+offsets.y*v.dir, 0, 2*v.dir,2)
         if debugRender then
             -- Физичный бох
             love.graphics.setColor(0.5, 0.5, 0.5, 1)
