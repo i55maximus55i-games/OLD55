@@ -111,3 +111,23 @@ player_states["jump"].frames[1].textures = {}
 player_states["jump"].frames[1].textures[0] = ASSETS[1].jump[2]
 player_states["jump"].frames[1].hitbox = {x=-15,y=-30,w=30,h=60}
 player_states["jump"].frames[1].hurtbox = {active=false}
+
+player_states["slide"] = {}
+player_states["slide"].duration = 0.35
+player_states["slide"].length = 3
+player_states["slide"].frames = {}
+player_states["slide"].frames[0] = {} 
+player_states["slide"].frames[0].textures = {} 
+player_states["slide"].frames[0].textures[0] = ASSETS[1].slide[1]
+player_states["slide"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
+player_states["slide"].frames[0].hurtbox = {active=false}
+player_states["slide"].frames[1] = {} 
+player_states["slide"].frames[1].textures = {} 
+player_states["slide"].frames[1].textures[0] = ASSETS[1].slide[2]
+player_states["slide"].frames[1].hitbox = {x=-15,y=-30,w=30,h=60}
+player_states["slide"].frames[1].hurtbox = {active=false}
+player_states["slide"].frames[2] = {} 
+player_states["slide"].frames[2].textures = {} 
+player_states["slide"].frames[2].textures[0] = ASSETS[1].slide[3]
+player_states["slide"].frames[2].hitbox = {x=-15,y=-30,w=30,h=60}
+player_states["slide"].frames[2].hurtbox = {active=true, x=20,y=0,w=30, h=30}
