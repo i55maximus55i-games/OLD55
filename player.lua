@@ -18,6 +18,46 @@ player_states["idle"].frames[0].textures[0] = ASSETS[1].stand[1]
 player_states["idle"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
 player_states["idle"].frames[0].hurtbox = {active=false}
 
+player_states["walk"] = {}
+player_states["walk"].duration = 1
+player_states["walk"].length = 2
+player_states["walk"].frames = {}
+player_states["walk"].frames[0] = {} 
+player_states["walk"].frames[0].textures = {} 
+player_states["walk"].frames[0].textures[0] = ASSETS[1].walk[1]
+player_states["walk"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
+player_states["walk"].frames[0].hurtbox = {active=false}
+player_states["walk"].frames[1] = {} 
+player_states["walk"].frames[1].textures = {} 
+player_states["walk"].frames[1].textures[0] = ASSETS[1].walk[2]
+player_states["walk"].frames[1].hitbox = {x=-15,y=-30,w=30,h=60}
+player_states["walk"].frames[1].hurtbox = {active=false}
+
+player_states["run"] = {}
+player_states["run"].duration = 0.4
+player_states["run"].length = 4
+player_states["run"].frames = {}
+player_states["run"].frames[0] = {} 
+player_states["run"].frames[0].textures = {} 
+player_states["run"].frames[0].textures[0] = ASSETS[1].run[1]
+player_states["run"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
+player_states["run"].frames[0].hurtbox = {active=false}
+player_states["run"].frames[1] = {} 
+player_states["run"].frames[1].textures = {} 
+player_states["run"].frames[1].textures[0] = ASSETS[1].run[2]
+player_states["run"].frames[1].hitbox = {x=-15,y=-30,w=30,h=60}
+player_states["run"].frames[1].hurtbox = {active=false}
+player_states["run"].frames[2] = {} 
+player_states["run"].frames[2].textures = {} 
+player_states["run"].frames[2].textures[0] = ASSETS[1].run[3]
+player_states["run"].frames[2].hitbox = {x=-15,y=-30,w=30,h=60}
+player_states["run"].frames[2].hurtbox = {active=false}
+player_states["run"].frames[3] = {} 
+player_states["run"].frames[3].textures = {} 
+player_states["run"].frames[3].textures[0] = ASSETS[1].run[4]
+player_states["run"].frames[3].hitbox = {x=-15,y=-30,w=30,h=60}
+player_states["run"].frames[3].hurtbox = {active=false}
+
 player_states["wallSlide"] = {}
 player_states["wallSlide"].duration = 1
 player_states["wallSlide"].length = 1
@@ -72,7 +112,7 @@ function player_create(joystick, x, y)
     player.stateTimer = 0
     player.dir = 1
 
-    player.run = true
+    player.run = false
     player.stun = 0
     player.maxSpeedWalk = 250
     player.maxSpeedRun  = 500
@@ -146,6 +186,14 @@ function player_update(dt)
             local targetSpeed = left_x * player.maxSpeedWalk
             if math.abs(left_x) > 0.1 then
                 if left_x > 0 then player.dir = 1 else player.dir = -1 end
+                if player.run then 
+                    player.state = "run" 
+                else 
+                    player.state = "walk"
+                end
+            else
+                player.state = "idle"
+                player.stateTimer = 0
             end
             if player.run then targetSpeed = left_x * player.maxSpeedRun end
             local mass = player.body:getMass()
@@ -200,12 +248,10 @@ function player_update(dt)
                     if player.dir > 0 then
                         if p1_x < p2_x + hitbox.w and p1_x + hurtbox.w> p2_x and p1_y < p2_y + hitbox.h and p1_y + hurtbox.h > p2_y then
                             player_hit(player, other_player)
-                            print('GOVNO EBANOE'..love.math.random(10, 99))
                         end
                     else
                         if p1_x - hurtbox.x * 2 < p2_x + hitbox.w and p1_x - hurtbox.x * 2 + hurtbox.w > p2_x and p1_y < p2_y + hitbox.h and p1_y + hurtbox.h > p2_y then
                             player_hit(player, other_player)
-                            print('GOVNO EBANOE'..love.math.random(10, 99))
                         end
                     end
                 end
@@ -225,13 +271,12 @@ function player_control(joystick, butt, pressed)
     local player = players[joystick]
     
     -- бегит
-    
     if butt == 2 then
         player.run = pressed
+        player.stateTimer = 0
     end
     
     -- Прыг
-
     if butt == 3 then
         if pressed then
             if player.stun < 0 then
