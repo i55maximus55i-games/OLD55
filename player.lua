@@ -248,7 +248,7 @@ function player_control(joystick, butt, pressed)
         end
     end
     -- Пиздинг
-    if butt == 2 then
+    if butt == 4 then
         if pressed then
             if not player.isJump then
                 if player.state == "idle" or player.state == "walk" then
