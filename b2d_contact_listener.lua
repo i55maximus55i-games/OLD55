@@ -27,8 +27,13 @@ function beginContact(a, b, coll)
 			if player.state == "ass" then
 				player.state = "idle"
 				local vx, vy = player.body:getLinearVelocity()
-				player.body:setLinearVelocity(vx, -120)
+				player.body:setLinearVelocity(vx, -300)
 				player.stateTimer = 0
+			end
+			if player.state == "stun" then
+				player.state = "idle"
+				player.stateTimer = 0
+				player.stun = -1
 			end
 		end
 		-- Коллайдеры для прилипания к платформам

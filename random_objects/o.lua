@@ -20,6 +20,7 @@ function CRO(in_o, extra, x, y)
     o.fixture = love.physics.newFixture(o.body, o.shape)
     o.fixture:setFriction(0.3)
     o.fixture:setUserData(o)
+    o.fixture:setSensor(true)
   else
     o.shit_x = x
     o.shit_y = y

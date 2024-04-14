@@ -32,15 +32,15 @@ function love.load(args)
     platform_create(x + 150 * 0, y + 150 * 0, 150, 150)
     platform_create(x + 150 * 0, y + 150 * 1, 150, 150)
 
-    platform_create(x + 150 * 0, y + 150 * 4, 150, 150)
-    platform_create(x + 150 * 1, y + 150 * 4, 150, 150)
+    platform_create(x + 150 * 1, y + 150 * 4, 300, 150)
+    -- platform_create(x + 150 * 1, y + 150 * 4, 150, 150)
 
-    platform_create(x + 150 * 3, y + 150 * 3, 150, 150)
-    platform_create(x + 150 * 4, y + 150 * 3, 150, 150)
-    platform_create(x + 150 * 5, y + 150 * 3, 150, 150)
+    platform_create(x + 150 * 5, y + 150 * 3, 450, 150)
+    -- platform_create(x + 150 * 4, y + 150 * 3, 150, 150)
+    -- platform_create(x + 150 * 5, y + 150 * 3, 150, 150)
 
-    platform_create(x + 150 * 7, y + 150 * 4, 150, 150)
-    platform_create(x + 150 * 8, y + 150 * 4, 150, 150)
+    platform_create(x + 150 * 8.6, y + 150 * 4, 300, 150)
+    -- platform_create(x + 150 * 8, y + 150 * 4, 150, 150)
 
     platform_create(x + 150 * 9, y + 150 * 0, 150, 150)
     platform_create(x + 150 * 9, y + 150 * 1, 150, 150)

@@ -106,7 +106,7 @@ player_states["run_punch"].frames[0].textures = {}
 player_states["run_punch"].frames[0].textures[0] = ASSETS[3].shoulder[1]
 player_states["run_punch"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
 player_states["run_punch"].frames[0].hurtbox = {active=true, x = 20, y = -20, w = 40, h = 40}
-player_states["run_punch"].frames[0].damage_vector = {x=100, y=-100}
+player_states["run_punch"].frames[0].damage_vector = {x=140, y=-200}
 
 player_states["jump"] = {}
 player_states["jump"].duration = 0.2
@@ -141,8 +141,8 @@ player_states["slide"].frames[2] = {}
 player_states["slide"].frames[2].textures = {} 
 player_states["slide"].frames[2].textures[0] = ASSETS[3].slide[3]
 player_states["slide"].frames[2].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["slide"].frames[2].hurtbox = {active=true, x=20,y=0,w=30, h=30}
-player_states["slide"].frames[2].damage_vector = {x=100, y=-100}
+player_states["slide"].frames[2].hurtbox = {active=true, x=0,y=0,w=30, h=30}
+player_states["slide"].frames[2].damage_vector = {x=100, y=-300}
 
 player_states["sexkick"] = {}
 player_states["sexkick"].duration = 0.2
@@ -162,7 +162,7 @@ player_states["sexkick"].frames[2] = {}
 player_states["sexkick"].frames[2].textures = {} 
 player_states["sexkick"].frames[2].textures[0] = ASSETS[3].sexkick[3]
 player_states["sexkick"].frames[2].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["sexkick"].frames[2].hurtbox = {active=true, x = 20, y = -20, w = 40, h = 40}
+player_states["sexkick"].frames[2].hurtbox = {active=true, x = 0, y = 0, w = 40, h = 20}
 player_states["sexkick"].frames[2].damage_vector = {x=100, y=-100}
 
 player_states["ass"] = {}
@@ -173,7 +173,7 @@ player_states["ass"].frames[0] = {}
 player_states["ass"].frames[0].textures = {} 
 player_states["ass"].frames[0].textures[0] = ASSETS[3].ass[1]
 player_states["ass"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["ass"].frames[0].hurtbox = {active=true, x = -20, y = 20, w = 40, h = 40}
+player_states["ass"].frames[0].hurtbox = {active=true, x = 0, y = 0, w = 40, h = 40}
 player_states["ass"].frames[0].damage_vector = {x=100, y=-100}
 
 player_states["upper"] = {}
@@ -190,9 +190,10 @@ player_states["upper"].frames[1].textures = {}
 player_states["upper"].frames[1].textures[0] = ASSETS[3].uppercut[2]
 player_states["upper"].frames[1].hitbox = {x=-15,y=-30,w=30,h=60}
 player_states["upper"].frames[1].hurtbox = {active=true, x = 20, y = -20, w = 40, h = 40}
+player_states["upper"].frames[1].damage_vector = {x=100, y=-100}
 player_states["upper"].frames[2] = {} 
 player_states["upper"].frames[2].textures = {} 
 player_states["upper"].frames[2].textures[0] = ASSETS[3].uppercut[3]
 player_states["upper"].frames[2].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["upper"].frames[2].hurtbox = {active=true, x = 20, y = -20, w = 40, h = 40}
-player_states["upper"].frames[2].damage_vector = {x=100, y=-100}
+player_states["upper"].frames[2].hurtbox = {active=true, x = 20, y = -50, w = 40, h = 80}
+player_states["upper"].frames[2].damage_vector = {x=100, y=-400}
