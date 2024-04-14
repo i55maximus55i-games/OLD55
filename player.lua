@@ -184,7 +184,7 @@ function player_update(dt)
         local spriteIndex = math.floor(player.stateTimer / player_states[state].duration * player_states[state].length)
         local hurtbox = player_states[state].frames[spriteIndex].hurtbox
         if hurtbox.active then
-            p1_x = p1_x + hurtbox.x * player.dir
+            p1_x = p1_x + hurtbox.x
             p1_y = p1_y + hurtbox.y
             for other_i,other_player in pairs(players) do
                 if i ~= other_i then
@@ -196,9 +196,17 @@ function player_update(dt)
                     p2_x = p2_x + hitbox.x
                     p2_y = p2_y + hitbox.y
     
-                    if p1_x < p2_x + hitbox.w and p1_x + hurtbox.w * player.dir > p2_x and p1_y < p2_y + hitbox.h and p1_y + hurtbox.h > p2_y then
-                        player_hit(player, other_player)
-                        print('GOVNO EBANOE'..love.math.random(10, 99))
+                    love.graphics.rectangle("line", v.body:getX() + hurtbox.x * v.dir, v.body:getY() + hurtbox.y, hurtbox.w * v.dir, hurtbox.h)
+                    if player.dir > 0 then
+                        if p1_x < p2_x + hitbox.w and p1_x + hurtbox.w> p2_x and p1_y < p2_y + hitbox.h and p1_y + hurtbox.h > p2_y then
+                            player_hit(player, other_player)
+                            print('GOVNO EBANOE'..love.math.random(10, 99))
+                        end
+                    else
+                        if p1_x - hurtbox.x * 2 < p2_x + hitbox.w and p1_x - hurtbox.x * 2 + hurtbox.w > p2_x and p1_y < p2_y + hitbox.h and p1_y + hurtbox.h > p2_y then
+                            player_hit(player, other_player)
+                            print('GOVNO EBANOE'..love.math.random(10, 99))
+                        end
                     end
                 end
             end
