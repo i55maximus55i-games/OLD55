@@ -17,15 +17,15 @@ player_states["idle"].tiles[0].textures[0] = blue_idle
 player_states["idle"].tiles[0].hitbox = {x=-15,y=-30,w=30,h=60}
 player_states["idle"].tiles[0].hurtbox = {active=false}
 
-player_states["wallSlime"] = {}
-player_states["wallSlime"].duration = 1
-player_states["wallSlime"].length = 1
-player_states["wallSlime"].tiles = {}
-player_states["wallSlime"].tiles[0] = {} 
-player_states["wallSlime"].tiles[0].textures = {} 
-player_states["wallSlime"].tiles[0].textures[0] = blue_wallslime
-player_states["wallSlime"].tiles[0].hitbox = {x=0,y=0,w=40,h=60}
-player_states["wallSlime"].tiles[0].hurtbox = {active=false}
+player_states["wallSlide"] = {}
+player_states["wallSlide"].duration = 1
+player_states["wallSlide"].length = 1
+player_states["wallSlide"].tiles = {}
+player_states["wallSlide"].tiles[0] = {} 
+player_states["wallSlide"].tiles[0].textures = {} 
+player_states["wallSlide"].tiles[0].textures[0] = blue_wallslide
+player_states["wallSlide"].tiles[0].hitbox = {x=0,y=0,w=40,h=60}
+player_states["wallSlide"].tiles[0].hurtbox = {active=false}
 
 player_states["punch"] = {}
 player_states["punch"].duration = 2
@@ -52,7 +52,10 @@ player_states["punch"].tiles[3].textures[0] = green_jab[4]
 player_states["punch"].tiles[3].hitbox = {x=-15,y=-30,w=30,h=60}
 player_states["punch"].tiles[3].hurtbox = {active=true, x=20,y=0,w=30, h=30}
 
+
+
 function player_create(joystick, x, y)
+    --- @class Player
     local player = {}
 
     player.type = "player"
@@ -78,6 +81,10 @@ function player_create(joystick, x, y)
     player.isJump = false
     player.wallstick_timer = 0
     player.wallstick = 0
+
+    player.isStickingToWall = false
+
+    player.mayjump = true
 
     players[joystick] = player
 end
@@ -117,6 +124,11 @@ function player_update(dt)
         local left_x, left_y, right_x, right_y = i:getAxes()
         local vx, vy = player.body:getLinearVelocity()
 
+        -- сбросить прыжок если прилетело в ебало
+        if (player.stun > 0) then
+            player.isJump = false
+        end
+
         player.stateTimer = player.stateTimer + dt
         if player.stateTimer > player_states[player.state].duration then
             if player.state == "punch" then player.state = "idle" end
@@ -124,6 +136,8 @@ function player_update(dt)
         end
 
         player.stun = player.stun - dt
+
+
 
         if player.stun < 0 then
             -- ходит/бегит
@@ -137,34 +151,23 @@ function player_update(dt)
 
             -- прилипат
             if player.wallstick ~= 0 then
-                if player.state ~= "wallSlime" then
-                    player.state = "wallSlime"
+                if player.state ~= "wallSlide" then
+                    player.state = "wallSlide"
                     player.stateTimer = 0
+                    player.isStickingToWall = true
                 end
                 local vx, vy = player.body:getLinearVelocity()
                 player.body:setLinearVelocity(vx, 0)
-                if player.isJump then
-                    player.body:applyLinearImpulse(player.wallstick * 200, -80)
-                    player.wallstick = 0
-                    player.isJump = false
-                end
+                -- if player.isJump then
+                    -- player.body:applyLinearImpulse(player.wallstick * 200, -80)
+                    -- player.wallstick = 0
+                    -- player.isJump = true
+                -- end
             else
-                if player.state == "wallSlime" then
+                if player.state == "wallSlide" then
                     player.state = "idle"
                     player.stateTimer = 0
                 end
-            -- прыгат
-                local vx, vy = player.body:getLinearVelocity()
-                player.jumpTimer = player.jumpTimer - dt
-                if player.isJump then
-                    if player.jumpTimer > 0 then
-                        vy = -200
-                    else
-                        vy = 0
-                        player.isJump = false
-                    end
-                end
-                player.body:setLinearVelocity(vx, vy)
             end
         end
 
@@ -199,9 +202,11 @@ end
 -- player1 тот кто въебал
 -- player2 тот кому въебали
 function player_hit(player1, player2)
+    
 end
 
 function player_control(joystick, butt, pressed)
+    --- @type Player
     local player = players[joystick]
     -- Прыг
     if butt == 3 then
@@ -210,11 +215,24 @@ function player_control(joystick, butt, pressed)
                 if player.jumpCounter <= 2 then
                     player.jumpTimer = 0.3
                     player.jumpCounter = player.jumpCounter + 1
+                    local p_xv, p_yv = player.body:getLinearVelocity()
+                    local extra_x_push = 0
+                    if player.isStickingToWall then
+                        print(player.wallstick)
+                        extra_x_push = player.wallstick * 400
+                        player.wallstick = 0
+                    end
+                    player.body:setLinearVelocity(p_xv + extra_x_push, -500)
                     player.isJump = true
+                    print('jump')
                 end
             end
         else
-            player.jumpTimer = 0.0
+            local vx, vy = player.body:getLinearVelocity()
+            if (player.isJump and vy < 0 ) then
+                
+                player.body:setLinearVelocity(vx, -10)
+            end
             player.jumpCounter = player.jumpCounter + 1
         end
     end

@@ -11,7 +11,7 @@ debugRender = true
 function love.load(args)
     -- Физика
     love.physics.setMeter(60)
-    b2d_world = love.physics.newWorld(0, 100, true)
+    b2d_world = love.physics.newWorld(0, 1000, true)
     b2d_world:setCallbacks(beginContact, endContact, preSolve, postSolve)
 
     for y = 0,5 do
