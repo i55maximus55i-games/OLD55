@@ -12,14 +12,21 @@ function CRO(in_o, extra, x, y)
     o[i] = v
   end
 
+  if (not o.nophys) then
+    o.type = "random"
+    o.body = love.physics.newBody(b2d_world, x, y, "dynamic")
+    o.body:setFixedRotation(true)
+    o.shape = love.physics.newRectangleShape(40, 40)
+    o.fixture = love.physics.newFixture(o.body, o.shape)
+    o.fixture:setFriction(0.3)
+    o.fixture:setUserData(o)
+  else
+    o.shit_x = x
+    o.shit_y = y
+    o.shit_dx = 0
+    o.shit_dy = 0
+  end
   
-  o.type = "random"
-  o.body = love.physics.newBody(b2d_world, x, y, "dynamic")
-  o.body:setFixedRotation(true)
-  o.shape = love.physics.newRectangleShape(40, 40)
-  o.fixture = love.physics.newFixture(o.body, o.shape)
-  o.fixture:setFriction(0.3)
-  o.fixture:setUserData(o)
   
   if (o.create) then
     o:create()
@@ -30,6 +37,10 @@ end
 function URO(dt)
   for i,v in pairs(RANDOM_OBJECTS) do
     if (v) then
+      if (v.nophys) then
+        v.shit_x = v.shit_x + v.shit_dx*dt
+        v.shit_y = v.shit_y + v.shit_dy*dt
+      end
       v:update(dt)
       if v.deleteme then
         RANDOM_OBJECTS[i] = nil

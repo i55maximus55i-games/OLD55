@@ -21,7 +21,7 @@ function love.load(args)
     b2d_world = love.physics.newWorld(0, 1000, true)
     b2d_world:setCallbacks(beginContact, endContact, preSolve, postSolve)
 
-    for y = 0,5 do
+    for y = 2,5 do
         for x = 0, 3 do
             platform_create(50 + x * 600 + (y % 2) * 300, 200 + 150 * y, 150, 150)
         end
