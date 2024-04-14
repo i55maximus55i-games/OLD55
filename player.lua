@@ -6,95 +6,7 @@ players = {}
 player_width = 40
 player_height = 60
 
-
-player_states = {}
-player_states["idle"] = {}
-player_states["idle"].duration = 1
-player_states["idle"].length = 1
-player_states["idle"].frames = {}
-player_states["idle"].frames[0] = {} 
-player_states["idle"].frames[0].textures = {} 
-player_states["idle"].frames[0].textures[0] = ASSETS[1].stand[1]
-player_states["idle"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["idle"].frames[0].hurtbox = {active=false}
-
-player_states["walk"] = {}
-player_states["walk"].duration = 1
-player_states["walk"].length = 2
-player_states["walk"].frames = {}
-player_states["walk"].frames[0] = {} 
-player_states["walk"].frames[0].textures = {} 
-player_states["walk"].frames[0].textures[0] = ASSETS[1].walk[1]
-player_states["walk"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["walk"].frames[0].hurtbox = {active=false}
-player_states["walk"].frames[1] = {} 
-player_states["walk"].frames[1].textures = {} 
-player_states["walk"].frames[1].textures[0] = ASSETS[1].walk[2]
-player_states["walk"].frames[1].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["walk"].frames[1].hurtbox = {active=false}
-
-player_states["run"] = {}
-player_states["run"].duration = 0.4
-player_states["run"].length = 4
-player_states["run"].frames = {}
-player_states["run"].frames[0] = {} 
-player_states["run"].frames[0].textures = {} 
-player_states["run"].frames[0].textures[0] = ASSETS[1].run[1]
-player_states["run"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["run"].frames[0].hurtbox = {active=false}
-player_states["run"].frames[1] = {} 
-player_states["run"].frames[1].textures = {} 
-player_states["run"].frames[1].textures[0] = ASSETS[1].run[2]
-player_states["run"].frames[1].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["run"].frames[1].hurtbox = {active=false}
-player_states["run"].frames[2] = {} 
-player_states["run"].frames[2].textures = {} 
-player_states["run"].frames[2].textures[0] = ASSETS[1].run[3]
-player_states["run"].frames[2].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["run"].frames[2].hurtbox = {active=false}
-player_states["run"].frames[3] = {} 
-player_states["run"].frames[3].textures = {} 
-player_states["run"].frames[3].textures[0] = ASSETS[1].run[4]
-player_states["run"].frames[3].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["run"].frames[3].hurtbox = {active=false}
-
-player_states["wallSlide"] = {}
-player_states["wallSlide"].duration = 1
-player_states["wallSlide"].length = 1
-player_states["wallSlide"].frames = {}
-player_states["wallSlide"].frames[0] = {} 
-player_states["wallSlide"].frames[0].textures = {} 
-player_states["wallSlide"].frames[0].textures[0] = ASSETS[1].wallhang[1]
-player_states["wallSlide"].frames[0].hitbox = {x=0,y=0,w=40,h=60}
-player_states["wallSlide"].frames[0].hurtbox = {active=false}
-player_states["wallSlide"].frames[0].tex_offset = {x=-10,y=0}
-
-player_states["punch"] = {}
-player_states["punch"].duration = 2
-player_states["punch"].length = 4
-player_states["punch"].frames = {}
-player_states["punch"].frames[0] = {} 
-player_states["punch"].frames[0].textures = {} 
-player_states["punch"].frames[0].textures[0] = ASSETS[1].jab[1]
-player_states["punch"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["punch"].frames[0].hurtbox = {active=false}
-player_states["punch"].frames[1] = {} 
-player_states["punch"].frames[1].textures = {} 
-player_states["punch"].frames[1].textures[0] = ASSETS[1].jab[2]
-player_states["punch"].frames[1].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["punch"].frames[1].hurtbox = {active=true, x=20,y=0,w=30, h=30}
-player_states["punch"].frames[2] = {} 
-player_states["punch"].frames[2].textures = {} 
-player_states["punch"].frames[2].textures[0] = ASSETS[1].jab[3]
-player_states["punch"].frames[2].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["punch"].frames[2].hurtbox = {active=false}
-player_states["punch"].frames[3] = {} 
-player_states["punch"].frames[3].textures = {} 
-player_states["punch"].frames[3].textures[0] = ASSETS[1].jab[4]
-player_states["punch"].frames[3].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["punch"].frames[3].hurtbox = {active=true, x=20,y=0,w=30, h=30}
-
-
+require 'player_states'
 
 function player_create(joystick, x, y)
     --- @class Player
@@ -175,8 +87,16 @@ function player_update(dt)
 
         player.stateTimer = player.stateTimer + dt
         if player.stateTimer > player_states[player.state].duration then
-            if player.state == "punch" then player.state = "idle" end
-            player.stateTimer = 0
+            if player.state == "punch" then 
+                player.state = "idle"
+                player.stateTimer = 0
+            end
+            if player.state == "jump" then 
+                player.stateTimer = 0.15 
+            end
+            if player.state == "idle" or player.state == "walk" or player.state == "run" then
+                player.stateTimer = 0
+            end
         end
 
         player.stun = player.stun - dt
@@ -186,13 +106,17 @@ function player_update(dt)
             local targetSpeed = left_x * player.maxSpeedWalk
             if math.abs(left_x) > 0.1 then
                 if left_x > 0 then player.dir = 1 else player.dir = -1 end
-                if player.run then 
-                    player.state = "run" 
-                else 
-                    player.state = "walk"
+                if not player.isJump then
+                    if player.run then 
+                        player.state = "run" 
+                    else 
+                        player.state = "walk"
+                    end
+                else
+                    player.state = "jump"
                 end
             else
-                player.state = "idle"
+                if player.isJump then player.state = "jump" else player.state = "idle" end
                 player.stateTimer = 0
             end
             if player.run then targetSpeed = left_x * player.maxSpeedRun end
@@ -292,13 +216,13 @@ function player_control(joystick, butt, pressed)
                     end
                     player.body:setLinearVelocity(p_xv + extra_x_push, -700)
                     player.isJump = true
-                    print('jump')
+                    player.state = "jump"
+                    player.stateTimer = 0
                 end
             end
         else
             local vx, vy = player.body:getLinearVelocity()
-            if (player.isJump and vy < 0 ) then
-                
+            if (player.isJump and vy < 0) then
                 player.body:setLinearVelocity(vx, -10)
             end
             player.jumpCounter = player.jumpCounter + 1
