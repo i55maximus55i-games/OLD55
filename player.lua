@@ -1,6 +1,6 @@
 require 'load_assets'
 local lightning = require 'random_objects.lightninig'
-
+local lp = require 'random_objects.lightning_particle'
 LOAD_PLAYER_ASSETS()
 players = {}
 
@@ -271,14 +271,25 @@ function player_hit(attacker, defender)
     local active_frame = active_state.frames[ math.floor(attacker.stateTimer / active_state.duration * active_state.length) ]
 
     -- defender.body:applyLinearImpulse(0, -1000)
-    local v = active_frame.damage_vector
+    local v = {}
+    if (not active_frame.damage_vector) then return end
+    v.x = active_frame.damage_vector.x
+    v.y = active_frame.damage_vector.y
     if (v) then
-        defender.damage = defender.damage + 0.1
+        defender.damage = defender.damage + 0.4
         defender.damageTextTimer = 0.6
+        print(defender.damage)
         v.x = v.x * defender.damage
         v.y = v.y * defender.damage
         defender.body:setLinearVelocity(v.x * attacker.dir, v.y)
         defender.stun = 0.4 * defender.damage
+
+        for i=0,3 do
+            CRO(lp, {}, defender.body:getX()+math.random(-20,20), defender.body:getY()+math.random(-20,20))
+          end
+
+        local lvx, lvy = attacker.body:getLinearVelocity()
+        attacker.body:setLinearVelocity(lvx/4,lvy/2)
         -- defender.state = 'stun'
 
     end

@@ -19,7 +19,10 @@ return {
       CRO(splash, {left = true}, x, y-40)
     end
     for i=0,3 do
-      CRO(lp, {}, x+math.random(-20,20), y+math.random(-20,20))
+      CRO(lp, {
+        shit_dx = math.random(-100,100),
+        shit_dy = math.random(-100,100)
+      }, x+math.random(-20,20), y+math.random(-20,20))
     end
   end,
   draw = function (self)

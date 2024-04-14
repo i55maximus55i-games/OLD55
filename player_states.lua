@@ -24,7 +24,7 @@ current_state["stun"].frames[0].hitbox = {x=-1500000,y=-30,w=30,h=60}
 current_state["stun"].frames[0].hurtbox = {active=false}
 
 current_state["walk"] = {}
-current_state["walk"].duration = 1
+current_state["walk"].duration = 0.3
 current_state["walk"].length = 2
 current_state["walk"].frames = {}
 current_state["walk"].frames[0] = {}
