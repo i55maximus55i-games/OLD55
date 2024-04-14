@@ -30,6 +30,11 @@ function beginContact(a, b, coll)
 				player.body:setLinearVelocity(vx, -120)
 				player.stateTimer = 0
 			end
+			if player.state == "stun" then
+				player.state = "idle"
+				player.stateTimer = 0
+				player.stun = -1
+			end
 		end
 		-- Коллайдеры для прилипания к платформам
 		if other.type == "platform_left" then

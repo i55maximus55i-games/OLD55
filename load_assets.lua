@@ -11,6 +11,9 @@ for i = 1,4 do
     green_jab[i] = love.graphics.newImage('new_anim/1/jab/'..i..'.png')
 end
 
+font = love.graphics.newFont('assets/uni0553-webfont.ttf')
+love.graphics.setFont(font)
+
 local animation_list= {
     {
         name = "ass",

@@ -33,6 +33,9 @@ function player_create(joystick, x, y)
     player.targerSpeed  = 0
     player.acceleration = 2000
 
+    player.damage = 1
+    player.damageTextTimer = 0
+
     player.jumpCounter = 0
     player.jumpTimer = 0
     player.isJump = false
@@ -57,6 +60,9 @@ function player_draw()
         local offsets = player_states[state].frames[spriteIndex].tex_offset or {x=0,y=0}
 
         love.graphics.draw(drawable, x-v.dir*player_width+offsets.x*v.dir, y-player_height+10+offsets.y*v.dir, 0, 2*v.dir,2)
+        if v.damageTextTimer > 0 then
+            love.graphics.print('x'..v.damage, x-20, y - 100, 0, 3 / 1.2, 3 / 1.2)
+        end
         if debugRender then
             -- Физичный бох
             love.graphics.setColor(0.5, 0.5, 0.5, 1)
@@ -88,6 +94,7 @@ function player_update(dt)
         end
 
         player.stateTimer = player.stateTimer + dt
+        player.damageTextTimer = player.damageTextTimer - dt
         if player.stateTimer > player_states[player.state].duration then
             if player.state == "punch" or player.state == "slide" or player.state == "upper" then 
                 player.state = "idle"
@@ -222,6 +229,10 @@ function player_update(dt)
                 end
             end
         end
+
+        if p1_y > 1080 then
+            REMOVE_PLAYER(i)
+        end
     end
 end
 
@@ -238,9 +249,14 @@ function player_hit(attacker, defender)
     -- defender.body:applyLinearImpulse(0, -1000)
     local v = active_frame.damage_vector
     if (v) then
+        defender.damage = defender.damage + 0.1
+        defender.damageTextTimer = 0.6
+        v.x = v.x * defender.damage
+        v.y = v.y * defender.damage
         defender.body:setLinearVelocity(v.x * attacker.dir, v.y)
-        defender.stun = 1
+        defender.stun = 0.4 * defender.damage
         -- defender.state = 'stun'
+
     end
 
     print('ъуъ')
@@ -355,7 +371,7 @@ function love.joystickpressed(joystick, butt)
 
         if ( not exists ) then
             -- player_create(joystick, 100, 0)
-            CRO(lightning, {j = joystick},  100, 0)
+            CRO(lightning, {j = joystick},  1920 / 2 / 1.2 - 30, 0)
         end
     end
     player_control(joystick, butt, true)
