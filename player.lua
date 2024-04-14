@@ -89,7 +89,7 @@ function player_update(dt)
 
         player.stateTimer = player.stateTimer + dt
         if player.stateTimer > player_states[player.state].duration then
-            if player.state == "punch" or player.state == "slide" then 
+            if player.state == "punch" or player.state == "slide" or player.state == "upper" then 
                 player.state = "idle"
                 player.stateTimer = 0
             end
@@ -112,7 +112,7 @@ function player_update(dt)
             if player.state == "run_punch" or player.state == "slide" then
                 left_x = player.dir
             end
-            if player.state == "ass" then
+            if player.state == "ass" or player.state == "upper" then
                 left_x = 0
             end
             local targetSpeed = left_x * player.maxSpeedWalk
@@ -140,15 +140,19 @@ function player_update(dt)
                 end
             else
                 if player.state ~= "punch" then 
-                    if player.isJump then
-                        if player.state == "sexkick" then
-                        elseif player.state == "ass" then
-                        else
-                            player.state = "jump" 
-                        end
+                    if player.state == "upper" then
+                        
                     else 
-                        player.state = "idle" 
-                        player.stateTimer = 0
+                        if player.isJump then
+                            if player.state == "sexkick" then
+                            elseif player.state == "ass" then
+                            else
+                                player.state = "jump" 
+                            end
+                        else 
+                            player.state = "idle" 
+                            player.stateTimer = 0
+                        end
                     end
                 end
             end
@@ -296,6 +300,8 @@ function player_control(joystick, butt, pressed)
                     player.stateTimer = 0
                 elseif left_y < -0.2 then
                     player.state = "upper"
+                    local vx = player.body:getLinearVelocity()
+                    player.body:setLinearVelocity(vx, -550)
                     player.stateTimer = 0
                 else 
                     -- Jab
@@ -318,6 +324,8 @@ function player_control(joystick, butt, pressed)
                 elseif left_y < -0.2 then
                     -- Атака вверх
                     player.state = "upper"
+                    local vx = player.body:getLinearVelocity()
+                    player.body:setLinearVelocity(vx, -550)
                     player.stateTimer = 0
                 else
                     -- атака простая
