@@ -205,13 +205,15 @@ end
 ---@param defender Player
 function player_hit(attacker, defender)
     local active_state = player_states[attacker.state]
+    print(attacker.stateTimer, active_state.duration, active_state)
+    local active_frame = active_state.frames[ math.floor(attacker.stateTimer / active_state.duration * active_state.length) ]
 
-    defender.body:applyLinearImpulse(0, -1000)
-    if (active_state.damage_vector) then
-        local v = active_state.damage_vector
-        defender.body:applyLinearImpulse(v.x*attacker.dir, v.y)
-        print('a')
-        
+    -- defender.body:applyLinearImpulse(0, -1000)
+    local v = active_frame.damage_vector
+    if (v) then
+        defender.body:setLinearVelocity(v.x * attacker.dir, v.y)
+        defender.stun = 1
+        -- defender.state = 'stun'
     end
 
     print('ъуъ')
