@@ -8,7 +8,6 @@ player_width = 40
 player_height = 60
 
 require 'player_states'
-SPAWNED_PLAYER_NUMBER = 0
 function player_create(joystick, x, y, number)
     --- @class Player
     local player = {}
@@ -44,8 +43,25 @@ function player_create(joystick, x, y, number)
 
     player.isStickingToWall = false
 
-    SPAWNED_PLAYER_NUMBER = SPAWNED_PLAYER_NUMBER + 1
-    player.index = SPAWNED_PLAYER_NUMBER
+    local available_index = 1
+    for i=1,4 do
+        local bad_index = false
+        for k,v in pairs(players) do                                                                          
+            if (v.index == i) then
+                bad_index = true
+                goto next_dude
+            end
+        end
+        ::next_dude::
+
+        if not bad_index then
+            available_index = i
+            break
+        end
+    end
+
+    ::found::
+    player.index = available_index
 
     player.current_state = player_states[player.index]
 
