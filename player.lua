@@ -10,47 +10,47 @@ player_states = {}
 player_states["idle"] = {}
 player_states["idle"].duration = 1
 player_states["idle"].length = 1
-player_states["idle"].tiles = {}
-player_states["idle"].tiles[0] = {} 
-player_states["idle"].tiles[0].textures = {} 
-player_states["idle"].tiles[0].textures[0] = blue_idle
-player_states["idle"].tiles[0].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["idle"].tiles[0].hurtbox = {active=false}
+player_states["idle"].frames = {}
+player_states["idle"].frames[0] = {} 
+player_states["idle"].frames[0].textures = {} 
+player_states["idle"].frames[0].textures[0] = blue_idle
+player_states["idle"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
+player_states["idle"].frames[0].hurtbox = {active=false}
 
 player_states["wallSlide"] = {}
 player_states["wallSlide"].duration = 1
 player_states["wallSlide"].length = 1
-player_states["wallSlide"].tiles = {}
-player_states["wallSlide"].tiles[0] = {} 
-player_states["wallSlide"].tiles[0].textures = {} 
-player_states["wallSlide"].tiles[0].textures[0] = blue_wallslide
-player_states["wallSlide"].tiles[0].hitbox = {x=0,y=0,w=40,h=60}
-player_states["wallSlide"].tiles[0].hurtbox = {active=false}
+player_states["wallSlide"].frames = {}
+player_states["wallSlide"].frames[0] = {} 
+player_states["wallSlide"].frames[0].textures = {} 
+player_states["wallSlide"].frames[0].textures[0] = blue_wallslide
+player_states["wallSlide"].frames[0].hitbox = {x=0,y=0,w=40,h=60}
+player_states["wallSlide"].frames[0].hurtbox = {active=false}
 
 player_states["punch"] = {}
 player_states["punch"].duration = 2
 player_states["punch"].length = 4
-player_states["punch"].tiles = {}
-player_states["punch"].tiles[0] = {} 
-player_states["punch"].tiles[0].textures = {} 
-player_states["punch"].tiles[0].textures[0] = green_jab[1]
-player_states["punch"].tiles[0].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["punch"].tiles[0].hurtbox = {active=false}
-player_states["punch"].tiles[1] = {} 
-player_states["punch"].tiles[1].textures = {} 
-player_states["punch"].tiles[1].textures[0] = green_jab[2]
-player_states["punch"].tiles[1].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["punch"].tiles[1].hurtbox = {active=true, x=20,y=0,w=30, h=30}
-player_states["punch"].tiles[2] = {} 
-player_states["punch"].tiles[2].textures = {} 
-player_states["punch"].tiles[2].textures[0] = green_jab[3]
-player_states["punch"].tiles[2].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["punch"].tiles[2].hurtbox = {active=false}
-player_states["punch"].tiles[3] = {} 
-player_states["punch"].tiles[3].textures = {} 
-player_states["punch"].tiles[3].textures[0] = green_jab[4]
-player_states["punch"].tiles[3].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["punch"].tiles[3].hurtbox = {active=true, x=20,y=0,w=30, h=30}
+player_states["punch"].frames = {}
+player_states["punch"].frames[0] = {} 
+player_states["punch"].frames[0].textures = {} 
+player_states["punch"].frames[0].textures[0] = green_jab[1]
+player_states["punch"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
+player_states["punch"].frames[0].hurtbox = {active=false}
+player_states["punch"].frames[1] = {} 
+player_states["punch"].frames[1].textures = {} 
+player_states["punch"].frames[1].textures[0] = green_jab[2]
+player_states["punch"].frames[1].hitbox = {x=-15,y=-30,w=30,h=60}
+player_states["punch"].frames[1].hurtbox = {active=true, x=20,y=0,w=30, h=30}
+player_states["punch"].frames[2] = {} 
+player_states["punch"].frames[2].textures = {} 
+player_states["punch"].frames[2].textures[0] = green_jab[3]
+player_states["punch"].frames[2].hitbox = {x=-15,y=-30,w=30,h=60}
+player_states["punch"].frames[2].hurtbox = {active=false}
+player_states["punch"].frames[3] = {} 
+player_states["punch"].frames[3].textures = {} 
+player_states["punch"].frames[3].textures[0] = green_jab[4]
+player_states["punch"].frames[3].hitbox = {x=-15,y=-30,w=30,h=60}
+player_states["punch"].frames[3].hurtbox = {active=true, x=20,y=0,w=30, h=30}
 
 
 
@@ -69,12 +69,12 @@ function player_create(joystick, x, y)
     player.state = "idle"
     player.stateTimer = 0
 
-    player.run = false
+    player.run = true
     player.stun = 0
     player.maxSpeedWalk = 250
     player.maxSpeedRun  = 500
     player.targerSpeed  = 0
-    player.acceleration = 1500
+    player.acceleration = 2000
 
     player.jumpCounter = 0
     player.jumpTimer = 0
@@ -96,7 +96,7 @@ function player_draw()
         local state = v.state
         local playerSpriteIndex = 0 -- TODO
         local spriteIndex = math.floor(v.stateTimer / player_states[state].duration * player_states[state].length)
-        local drawable = player_states[state].tiles[spriteIndex].textures[playerSpriteIndex]
+        local drawable = player_states[state].frames[spriteIndex].textures[playerSpriteIndex]
 
         love.graphics.draw(drawable, x, y, 0)
         if debugRender then
@@ -104,11 +104,11 @@ function player_draw()
             love.graphics.setColor(0.5, 0.5, 0.5, 1)
             love.graphics.rectangle("line", v.body:getX() - player_width / 2, v.body:getY() - player_height / 2, player_width, player_height)
             -- Хитбох
-            local hitbox = player_states[state].tiles[spriteIndex].hitbox
+            local hitbox = player_states[state].frames[spriteIndex].hitbox
             love.graphics.setColor(0, 1, 0, 1)
             love.graphics.rectangle("line", v.body:getX() + hitbox.x, v.body:getY() + hitbox.y, hitbox.w, hitbox.h)
             -- Хуртбох
-            local hurtbox = player_states[state].tiles[spriteIndex].hurtbox
+            local hurtbox = player_states[state].frames[spriteIndex].hurtbox
             if hurtbox.active then
                 love.graphics.setColor(1, 0, 0, 1)
                 love.graphics.rectangle("line", v.body:getX() + hurtbox.x, v.body:getY() + hurtbox.y, hurtbox.w, hurtbox.h)
@@ -176,7 +176,7 @@ function player_update(dt)
         local p1_y = player.body:getY()
         local state = player.state
         local spriteIndex = math.floor(player.stateTimer / player_states[state].duration * player_states[state].length)
-        local hurtbox = player_states[state].tiles[spriteIndex].hurtbox
+        local hurtbox = player_states[state].frames[spriteIndex].hurtbox
         if hurtbox.active then
             p1_x = p1_x + hurtbox.x
             p1_y = p1_y + hurtbox.y
@@ -186,7 +186,7 @@ function player_update(dt)
                     local p2_y = other_player.body:getY()
                     local state = other_player.state
                     local spriteIndex = math.floor(other_player.stateTimer / player_states[state].duration * player_states[state].length)
-                    local hitbox = player_states[state].tiles[spriteIndex].hitbox
+                    local hitbox = player_states[state].frames[spriteIndex].hitbox
                     p2_x = p2_x + hitbox.x
                     p2_y = p2_y + hitbox.y
     
@@ -202,13 +202,21 @@ end
 -- player1 тот кто въебал
 -- player2 тот кому въебали
 function player_hit(player1, player2)
-    
+
 end
 
 function player_control(joystick, butt, pressed)
     --- @type Player
     local player = players[joystick]
+    
+    -- бегит
+    
+    if butt == 2 then
+        player.run = pressed
+    end
+    
     -- Прыг
+
     if butt == 3 then
         if pressed then
             if player.stun < 0 then
@@ -222,7 +230,7 @@ function player_control(joystick, butt, pressed)
                         extra_x_push = player.wallstick * 400
                         player.wallstick = 0
                     end
-                    player.body:setLinearVelocity(p_xv + extra_x_push, -500)
+                    player.body:setLinearVelocity(p_xv + extra_x_push, -700)
                     player.isJump = true
                     print('jump')
                 end
