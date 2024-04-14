@@ -89,15 +89,18 @@ function player_update(dt)
 
         player.stateTimer = player.stateTimer + dt
         if player.stateTimer > player_states[player.state].duration then
-            if player.state == "punch" then 
+            if player.state == "punch" or player.state == "slide" then 
                 player.state = "idle"
                 player.stateTimer = 0
             end
             if player.state == "jump" then 
                 player.stateTimer = 0.15 
             end
-            if player.state == "idle" or player.state == "walk" or player.state == "run" or player.state == "run_punch" then
+            if player.state == "idle" or player.state == "walk" or player.state == "run" or player.state == "run_punch" or player.state == "ass" then
                 player.stateTimer = 0
+            end
+            if player.state == "sexkick" then
+                player.stateTimer = 0.19
             end
         end
 
@@ -105,28 +108,45 @@ function player_update(dt)
 
         if player.stun < 0 then
             -- ходит/бегит
-            local targetSpeed = left_x * player.maxSpeedWalk
             if player.state == "punch" then left_x = 0 end
+            if player.state == "run_punch" or player.state == "slide" then
+                left_x = player.dir
+            end
+            if player.state == "ass" then
+                left_x = 0
+            end
+            local targetSpeed = left_x * player.maxSpeedWalk
             if math.abs(left_x) > 0.1 then
-                if player.state ~= "punch" then 
-                    if left_x > 0 then player.dir = 1 else player.dir = -1 end
-                    if not player.isJump then
-                        if player.run then 
-                            if player.state == "run_punch" then
-                                
+                if player.state == "slide" then
+                elseif player.state == "sexkick" then
+                elseif player.state == "ass" then
+                else 
+                    if player.state ~= "punch" then 
+                        if left_x > 0 then player.dir = 1 else player.dir = -1 end
+                        if not player.isJump then
+                            if player.run then 
+                                if player.state == "run_punch" then
+                                    left_x = player.dir
+                                else 
+                                    player.state = "run" 
+                                end
                             else 
-                                player.state = "run" 
+                                player.state = "walk"
                             end
-                        else 
-                            player.state = "walk"
+                        else
+                            player.state = "jump"
                         end
-                    else
-                        player.state = "jump"
                     end
                 end
             else
                 if player.state ~= "punch" then 
-                    if player.isJump then player.state = "jump" else 
+                    if player.isJump then
+                        if player.state == "sexkick" then
+                        elseif player.state == "ass" then
+                        else
+                            player.state = "jump" 
+                        end
+                    else 
                         player.state = "idle" 
                         player.stateTimer = 0
                     end
@@ -161,6 +181,9 @@ function player_update(dt)
                     player.stateTimer = 0
                 end
             end
+        else
+            player.state = "stun"
+            player.stateTimer = 0
         end
 
         -- Проверка хитохуртобоксов
@@ -188,7 +211,7 @@ function player_update(dt)
                             player_hit(player, other_player)
                         end
                     else
-                        if p1_x - hurtbox.x * 2 < p2_x + hitbox.w and p1_x - hurtbox.x * 2 + hurtbox.w > p2_x and p1_y < p2_y + hitbox.h and p1_y + hurtbox.h > p2_y then
+                        if p1_x - hurtbox.x * 4 < p2_x + hitbox.w and p1_x - hurtbox.x * 4 + hurtbox.w > p2_x and p1_y < p2_y + hitbox.h and p1_y + hurtbox.h > p2_y then
                             player_hit(player, other_player)
                         end
                     end
@@ -222,6 +245,7 @@ end
 function player_control(joystick, butt, pressed)
     --- @type Player
     local player = players[joystick]
+    local left_x, left_y, right_x, right_y = joystick:getAxes()
 
     if not player then return end
     
@@ -266,14 +290,39 @@ function player_control(joystick, butt, pressed)
     if butt == 4 then
         if pressed then
             if not player.isJump then
-                if player.state == "idle" or player.state == "walk" then
-                    player.state = "punch"
+                -- Slide
+                if left_y > 0.2 then
+                    player.state = "slide"
                     player.stateTimer = 0
+                elseif left_y < -0.2 then
+                    player.state = "upper"
+                    player.stateTimer = 0
+                else 
+                    -- Jab
+                    if player.state == "idle" or player.state == "walk" then
+                        player.state = "punch"
+                        player.stateTimer = 0
+                    end
+                    -- Shoulder
+                    if player.state == "run" then 
+                        player.state = "run_punch"
+                        player.stateTimer = 0
+                        player.body:applyLinearImpulse(0, -140)
+                    end
                 end
-                if player.state == "run" then 
-                    player.state = "run_punch"
+            else
+                if left_y > 0.2 then
+                    -- Атака вниз 
+                    player.state = "ass"
                     player.stateTimer = 0
-                    player.body:applyLinearImpulse(0, -140)
+                elseif left_y < -0.2 then
+                    -- Атака вверх
+                    player.state = "upper"
+                    player.stateTimer = 0
+                else
+                    -- атака простая
+                    player.state = "sexkick"
+                    player.stateTimer = 0
                 end
             end
         end
