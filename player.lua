@@ -8,7 +8,7 @@ player_width = 40
 player_height = 60
 
 require 'player_states'
-
+SPAWNED_PLAYER_NUMBER = 0
 function player_create(joystick, x, y, number)
     --- @class Player
     local player = {}
@@ -44,9 +44,10 @@ function player_create(joystick, x, y, number)
 
     player.isStickingToWall = false
 
-    player.index = number
+    SPAWNED_PLAYER_NUMBER = SPAWNED_PLAYER_NUMBER + 1
+    player.index = SPAWNED_PLAYER_NUMBER
 
-    player.current_state = player_states[number]
+    player.current_state = player_states[player.index]
 
     player.mayjump = true
 
@@ -363,7 +364,6 @@ function player_control(joystick, butt, pressed)
         end
     end
 end
-
 function love.joystickpressed(joystick, butt)
     if (butt == 10) then
         local exists = false
