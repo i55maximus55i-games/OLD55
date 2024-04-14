@@ -80,14 +80,14 @@ local animation_list= {
 
 PLAYER_COUNT = 1
 
-function LOAD_ASSETS() 
-    ASSETS = {}
+ASSETS = {}
+function LOAD_PLAYER_ASSETS() 
     for player_index=1,PLAYER_COUNT do
         ASSETS[player_index] = {}
         for _,adef in pairs(animation_list) do
             ASSETS[player_index][adef.name] = {}
             for animation_number=1,adef.count do
-                ASSETS[player_index][adef.name][animation_number] = love.graphics.newImage('new_anim/' .. player_index .. '/' .. adef.name .. '/' .. animation_number '.png')
+                ASSETS[player_index][adef.name][animation_number] = love.graphics.newImage('new_anim/' .. player_index .. '/' .. adef.name .. '/' .. animation_number .. '.png')
             end
         end
     end

@@ -1,5 +1,6 @@
 require 'load_assets'
 
+LOAD_PLAYER_ASSETS()
 players = {}
 
 player_width = 40
@@ -13,7 +14,7 @@ player_states["idle"].length = 1
 player_states["idle"].frames = {}
 player_states["idle"].frames[0] = {} 
 player_states["idle"].frames[0].textures = {} 
-player_states["idle"].frames[0].textures[0] = blue_idle
+player_states["idle"].frames[0].textures[0] = ASSETS[1].stand[1]
 player_states["idle"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
 player_states["idle"].frames[0].hurtbox = {active=false}
 
@@ -23,7 +24,7 @@ player_states["wallSlide"].length = 1
 player_states["wallSlide"].frames = {}
 player_states["wallSlide"].frames[0] = {} 
 player_states["wallSlide"].frames[0].textures = {} 
-player_states["wallSlide"].frames[0].textures[0] = blue_wallslide
+player_states["wallSlide"].frames[0].textures[0] = ASSETS[1].wallhang[1]
 player_states["wallSlide"].frames[0].hitbox = {x=0,y=0,w=40,h=60}
 player_states["wallSlide"].frames[0].hurtbox = {active=false}
 
@@ -33,22 +34,22 @@ player_states["punch"].length = 4
 player_states["punch"].frames = {}
 player_states["punch"].frames[0] = {} 
 player_states["punch"].frames[0].textures = {} 
-player_states["punch"].frames[0].textures[0] = green_jab[1]
+player_states["punch"].frames[0].textures[0] = ASSETS[1].jab[1]
 player_states["punch"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
 player_states["punch"].frames[0].hurtbox = {active=false}
 player_states["punch"].frames[1] = {} 
 player_states["punch"].frames[1].textures = {} 
-player_states["punch"].frames[1].textures[0] = green_jab[2]
+player_states["punch"].frames[1].textures[0] = ASSETS[1].jab[2]
 player_states["punch"].frames[1].hitbox = {x=-15,y=-30,w=30,h=60}
 player_states["punch"].frames[1].hurtbox = {active=true, x=20,y=0,w=30, h=30}
 player_states["punch"].frames[2] = {} 
 player_states["punch"].frames[2].textures = {} 
-player_states["punch"].frames[2].textures[0] = green_jab[3]
+player_states["punch"].frames[2].textures[0] = ASSETS[1].jab[3]
 player_states["punch"].frames[2].hitbox = {x=-15,y=-30,w=30,h=60}
 player_states["punch"].frames[2].hurtbox = {active=false}
 player_states["punch"].frames[3] = {} 
 player_states["punch"].frames[3].textures = {} 
-player_states["punch"].frames[3].textures[0] = green_jab[4]
+player_states["punch"].frames[3].textures[0] = ASSETS[1].jab[4]
 player_states["punch"].frames[3].hitbox = {x=-15,y=-30,w=30,h=60}
 player_states["punch"].frames[3].hurtbox = {active=true, x=20,y=0,w=30, h=30}
 
@@ -99,7 +100,7 @@ function player_draw()
         local spriteIndex = math.floor(v.stateTimer / player_states[state].duration * player_states[state].length)
         local drawable = player_states[state].frames[spriteIndex].textures[playerSpriteIndex]
 
-        love.graphics.draw(drawable, x, y, 0)
+        love.graphics.draw(drawable, x-v.dir*20, y, 0, 2*v.dir,2)
         if debugRender then
             -- Физичный бох
             love.graphics.setColor(0.5, 0.5, 0.5, 1)
@@ -142,7 +143,7 @@ function player_update(dt)
             -- ходит/бегит
             local targetSpeed = left_x * player.maxSpeedWalk
             if math.abs(left_x) > 0.1 then
-                if left_x > 0 then player.dir = 1 else player.dir = -1
+                if left_x > 0 then player.dir = 1 else player.dir = -1 end
             end
             if player.run then targetSpeed = left_x * player.maxSpeedRun end
             local mass = player.body:getMass()

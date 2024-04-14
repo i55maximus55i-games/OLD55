@@ -1,3 +1,5 @@
+love.graphics.setDefaultFilter("nearest", "nearest")
+
 local class = require("Luaoop").class
 
 require 'load_assets'
@@ -10,6 +12,9 @@ debugRender = true
 -- This function is called exactly once at the beginning of the game.
 function love.load(args)
     -- Физика
+
+
+    
     love.physics.setMeter(60)
     b2d_world = love.physics.newWorld(0, 1000, true)
     b2d_world:setCallbacks(beginContact, endContact, preSolve, postSolve)
@@ -30,6 +35,7 @@ end
 
 -- Callback function used to draw on the screen every frame.
 function love.draw()
+    love.graphics.scale(1.5,1.5)
     love.graphics.draw(background, 0, 0, 0, 1920 / background:getWidth(), 1080 / background:getHeight())
     platform_draw()
     player_draw()
