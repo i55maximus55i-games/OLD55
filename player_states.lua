@@ -13,7 +13,7 @@ player_states["walk"] = {}
 player_states["walk"].duration = 1
 player_states["walk"].length = 2
 player_states["walk"].frames = {}
-player_states["walk"].frames[0] = {} 
+player_states["walk"].frames[0] = {}
 player_states["walk"].frames[0].textures = {} 
 player_states["walk"].frames[0].textures[0] = ASSETS[2].walk[1]
 player_states["walk"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
