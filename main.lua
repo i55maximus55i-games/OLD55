@@ -60,6 +60,59 @@ function love.draw()
     platform_draw()
     DRO()
     player_draw()
+
+    local dead = true
+    love.graphics.print("Больжедор", 50, -10, 0, 4 / 1.2, 4 / 1.2)
+    for i,v in pairs(players) do
+        if v.index == 1 then 
+            dead = false
+        end
+    end
+    if dead then 
+        love.graphics.print("Мёртвый", 50, 35, 0, 4 / 1.2, 4 / 1.2)
+    else
+        love.graphics.print("Жывой", 50, 35, 0, 4 / 1.2, 4 / 1.2)
+    end
+
+    love.graphics.print("Веталь", 400, -10, 0, 4 / 1.2, 4 / 1.2)
+    dead = true
+    for i,v in pairs(players) do
+        if v.index == 2 then 
+            dead = false
+        end
+    end
+    if dead then 
+        love.graphics.print("Мёртвый", 400, 35, 0, 4 / 1.2, 4 / 1.2)
+    else
+        love.graphics.print("Жывой", 400, 35, 0, 4 / 1.2, 4 / 1.2)
+    end
+
+
+    love.graphics.print("Герасимыч", 800, -10, 0, 4 / 1.2, 4 / 1.2)
+    dead = true
+    for i,v in pairs(players) do
+        if v.index == 3 then 
+            dead = false
+        end
+    end
+    if dead then 
+        love.graphics.print("Мёртвый", 800, 35, 0, 4 / 1.2, 4 / 1.2)
+    else
+        love.graphics.print("Жывой", 800, 35, 0, 4 / 1.2, 4 / 1.2)
+    end
+
+
+    love.graphics.print("Ахмыл", 1200, -10, 0, 4 / 1.2, 4 / 1.2)
+    for i,v in pairs(players) do
+        if v.index == 4 then 
+            dead = false
+        end
+    end
+    if dead then 
+        love.graphics.print("Мёртвый", 1200, 35, 0, 4 / 1.2, 4 / 1.2)
+    else
+        love.graphics.print("Жывой", 1200, 35, 0, 4 / 1.2, 4 / 1.2)
+    end
 end
 
 -- Callback function triggered when the game is closed. 	Added since 0.7.0 	
