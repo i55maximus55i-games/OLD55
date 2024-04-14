@@ -76,6 +76,10 @@ local animation_list= {
         name = "wallhang",
         count = 1,
     },
+    {
+        name = "walk",
+        count = 2
+    }
 }
 
 PLAYER_COUNT = 1
