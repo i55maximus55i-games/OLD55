@@ -70,7 +70,7 @@ local animation_list= {
     },
     {
         name = "uppercut",
-        count = 1,
+        count = 3,
     },
     {
         name = "wallhang",
