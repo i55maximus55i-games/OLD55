@@ -135,17 +135,17 @@ current_state["slide"].frames[0] = {}
 current_state["slide"].frames[0].textures = {} 
 current_state["slide"].frames[0].textures[0] = ASSETS[i].slide[1]
 current_state["slide"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
-current_state["slide"].frames[0].hurtbox = {active=false}
+current_state["slide"].frames[0].hurtbox = {active=true, x=0,y=0,w=70, h=30}
 current_state["slide"].frames[1] = {} 
 current_state["slide"].frames[1].textures = {} 
 current_state["slide"].frames[1].textures[0] = ASSETS[i].slide[2]
 current_state["slide"].frames[1].hitbox = {x=-15,y=-30,w=30,h=60}
-current_state["slide"].frames[1].hurtbox = {active=false}
+current_state["slide"].frames[1].hurtbox = {active=true, x=0,y=0,w=70, h=30}
 current_state["slide"].frames[2] = {} 
 current_state["slide"].frames[2].textures = {} 
 current_state["slide"].frames[2].textures[0] = ASSETS[i].slide[3]
 current_state["slide"].frames[2].hitbox = {x=-15,y=-30,w=30,h=60}
-current_state["slide"].frames[2].hurtbox = {active=true, x=0,y=0,w=30, h=30}
+current_state["slide"].frames[2].hurtbox = {active=true, x=0,y=0,w=70, h=30}
 current_state["slide"].frames[2].damage_vector = {x=100, y=-300}
 
 current_state["sexkick"] = {}
@@ -166,7 +166,7 @@ current_state["sexkick"].frames[2] = {}
 current_state["sexkick"].frames[2].textures = {} 
 current_state["sexkick"].frames[2].textures[0] = ASSETS[i].sexkick[3]
 current_state["sexkick"].frames[2].hitbox = {x=-15,y=-30,w=30,h=60}
-current_state["sexkick"].frames[2].hurtbox = {active=true, x = 0, y = 0, w = 40, h = 20}
+current_state["sexkick"].frames[2].hurtbox = {active=true, x = 0, y = 0, w = 50, h = 50}
 current_state["sexkick"].frames[2].damage_vector = {x=100, y=-100}
 
 current_state["ass"] = {}

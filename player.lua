@@ -354,7 +354,7 @@ function player_control(joystick, butt, pressed)
                     if player.state == "run" then 
                         player.state = "run_punch"
                         player.stateTimer = 0
-                        player.body:applyLinearImpulse(0, -140)
+                        player.body:applyLinearImpulse(player.dir*300, -140)
                     end
                 end
             else
