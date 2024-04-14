@@ -299,10 +299,14 @@ function player_control(joystick, butt, pressed)
                     player.state = "slide"
                     player.stateTimer = 0
                 elseif left_y < -0.2 then
-                    player.state = "upper"
-                    local vx = player.body:getLinearVelocity()
-                    player.body:setLinearVelocity(vx, -550)
-                    player.stateTimer = 0
+                    -- апперхуй
+                    if player.jumpCounter <= 3 then
+                        player.state = "upper"
+                        local vx = player.body:getLinearVelocity()
+                        player.body:setLinearVelocity(vx, -550)
+                        player.stateTimer = 0
+                        player.jumpCounter = player.jumpCounter + 1
+                    end
                 else 
                     -- Jab
                     if player.state == "idle" or player.state == "walk" then
@@ -322,11 +326,14 @@ function player_control(joystick, butt, pressed)
                     player.state = "ass"
                     player.stateTimer = 0
                 elseif left_y < -0.2 then
-                    -- Атака вверх
-                    player.state = "upper"
-                    local vx = player.body:getLinearVelocity()
-                    player.body:setLinearVelocity(vx, -550)
-                    player.stateTimer = 0
+                    -- Апперхуй
+                    if player.jumpCounter <= 3 then
+                        player.state = "upper"
+                        local vx = player.body:getLinearVelocity()
+                        player.body:setLinearVelocity(vx, -550)
+                        player.stateTimer = 0
+                        player.jumpCounter = player.jumpCounter + 1
+                    end
                 else
                     -- атака простая
                     player.state = "sexkick"

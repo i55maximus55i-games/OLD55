@@ -21,12 +21,29 @@ function love.load(args)
     b2d_world = love.physics.newWorld(0, 1000, true)
     b2d_world:setCallbacks(beginContact, endContact, preSolve, postSolve)
 
-    for y = 2,5 do
-        for x = 0, 3 do
-            platform_create(50 + x * 600 + (y % 2) * 300, 200 + 150 * y, 150, 150)
-        end
-    end
+    -- for y = 2,5 do
+    --     for x = 0, 3 do
+    --         platform_create(50 + x * 600 + (y % 2) * 300, 200 + 150 * y, 150, 150)
+    --     end
+    -- end
     -- platform_create(1920 / 2, 200, 1920, 40)
+    local x = 120
+    local y = 250
+    platform_create(x + 150 * 0, y + 150 * 0, 150, 150)
+    platform_create(x + 150 * 0, y + 150 * 1, 150, 150)
+
+    platform_create(x + 150 * 0, y + 150 * 4, 150, 150)
+    platform_create(x + 150 * 1, y + 150 * 4, 150, 150)
+
+    platform_create(x + 150 * 3, y + 150 * 3, 150, 150)
+    platform_create(x + 150 * 4, y + 150 * 3, 150, 150)
+    platform_create(x + 150 * 5, y + 150 * 3, 150, 150)
+
+    platform_create(x + 150 * 7, y + 150 * 4, 150, 150)
+    platform_create(x + 150 * 8, y + 150 * 4, 150, 150)
+
+    platform_create(x + 150 * 9, y + 150 * 0, 150, 150)
+    platform_create(x + 150 * 9, y + 150 * 1, 150, 150)
 end
 	
 -- Callback function used to update the state of the game every frame.
@@ -38,7 +55,7 @@ end
 
 -- Callback function used to draw on the screen every frame.
 function love.draw()
-    love.graphics.scale(1.5,1.5)
+    love.graphics.scale(1.2,1.2)
     love.graphics.draw(background, 0, 0, 0, 1920 / background:getWidth(), 1080 / background:getHeight())
     platform_draw()
     DRO()
