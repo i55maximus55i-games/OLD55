@@ -1,4 +1,5 @@
 require 'load_assets'
+local lightning = require 'random_objects.lightninig'
 
 LOAD_PLAYER_ASSETS()
 players = {}
@@ -60,6 +61,7 @@ function player_create(joystick, x, y)
     --- @class Player
     local player = {}
 
+    player.j = joystick
     player.type = "player"
     player.body = love.physics.newBody(b2d_world, x, y, "dynamic")
     player.body:setFixedRotation(true)
@@ -223,6 +225,11 @@ end
 function player_control(joystick, butt, pressed)
     --- @type Player
     local player = players[joystick]
+
+    if not player then return end
+    
+
+    print(butt)
     
     -- бегит
     
@@ -271,6 +278,19 @@ function player_control(joystick, butt, pressed)
 end
 
 function love.joystickpressed(joystick, butt)
+    if (butt == 10) then
+        local exists = false
+        for i,v in pairs(players) do
+            if i == joystick then
+                exists = true
+            end
+        end
+
+        if ( not exists ) then
+            -- player_create(joystick, 100, 0)
+            CRO(lightning, {j = joystick},  100, 0)
+        end
+    end
     player_control(joystick, butt, true)
 end
 

@@ -1,0 +1,47 @@
+RANDOM_OBJECTS = {}
+
+function CRO(in_o, extra, x, y)
+
+  local o = {}
+
+  for i,v in pairs (in_o) do
+    o[i] = v
+  end
+
+  for i,v in pairs (extra) do
+    o[i] = v
+  end
+
+  
+  o.type = "random"
+  o.body = love.physics.newBody(b2d_world, x, y, "dynamic")
+  o.body:setFixedRotation(true)
+  o.shape = love.physics.newRectangleShape(40, 40)
+  o.fixture = love.physics.newFixture(o.body, o.shape)
+  o.fixture:setFriction(0.3)
+  o.fixture:setUserData(o)
+  
+  if (o.create) then
+    o:create()
+  end
+  RANDOM_OBJECTS[#RANDOM_OBJECTS+1] = o
+end
+
+function URO(dt)
+  for i,v in pairs(RANDOM_OBJECTS) do
+    if (v) then
+      v:update(dt)
+      if v.deleteme then
+        RANDOM_OBJECTS[i] = nil
+      end
+    end
+  end
+end
+
+function DRO()
+  for i,v in pairs(RANDOM_OBJECTS) do
+    if (v) then
+      v:draw()
+    end
+  end
+end
