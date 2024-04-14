@@ -68,6 +68,7 @@ function player_create(joystick, x, y)
 
     player.state = "idle"
     player.stateTimer = 0
+    player.dir = 1
 
     player.run = false
     player.stun = 0
@@ -137,11 +138,12 @@ function player_update(dt)
 
         player.stun = player.stun - dt
 
-
-
         if player.stun < 0 then
             -- ходит/бегит
             local targetSpeed = left_x * player.maxSpeedWalk
+            if math.abs(left_x) > 0.1 then
+                if left_x > 0 then player.dir = 1 else player.dir = -1
+            end
             if player.run then targetSpeed = left_x * player.maxSpeedRun end
             local mass = player.body:getMass()
             local acceleration = (targetSpeed - vx) / dt
@@ -151,6 +153,7 @@ function player_update(dt)
 
             -- прилипат
             if player.wallstick ~= 0 then
+                player.dir = player.wallstick
                 if player.state ~= "wallSlide" then
                     player.state = "wallSlide"
                     player.stateTimer = 0
