@@ -13,7 +13,7 @@ return {
     local x = self.body:getX()
     local y = self.body:getY()
     if (self.done) then
-      player_create(self.j, self.body:getX(), self.body:getY() - 40)
+      player_create(self.j, self.body:getX(), self.body:getY() - 40, 4)
       self.deleteme = true
       CRO(splash, {left = false}, x, y-40)
       CRO(splash, {left = true}, x, y-40)

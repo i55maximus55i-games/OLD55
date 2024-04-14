@@ -9,7 +9,7 @@ player_height = 60
 
 require 'player_states'
 
-function player_create(joystick, x, y)
+function player_create(joystick, x, y, number)
     --- @class Player
     local player = {}
 
@@ -44,6 +44,10 @@ function player_create(joystick, x, y)
 
     player.isStickingToWall = false
 
+    player.index = number
+
+    player.current_state = player_states[number]
+
     player.mayjump = true
 
     players[joystick] = player
@@ -55,9 +59,9 @@ function player_draw()
         local y = v.body:getY()
         local state = v.state
         local playerSpriteIndex = 0 -- TODO
-        local spriteIndex = math.floor(v.stateTimer / player_states[state].duration * player_states[state].length)
-        local drawable = player_states[state].frames[spriteIndex].textures[playerSpriteIndex]
-        local offsets = player_states[state].frames[spriteIndex].tex_offset or {x=0,y=0}
+        local spriteIndex = math.floor(v.stateTimer / v.current_state[state].duration * v.current_state[state].length)
+        local drawable = v.current_state[state].frames[spriteIndex].textures[playerSpriteIndex]
+        local offsets = v.current_state[state].frames[spriteIndex].tex_offset or {x=0,y=0}
 
         love.graphics.draw(drawable, x-v.dir*player_width+offsets.x*v.dir, y-player_height+10+offsets.y*v.dir, 0, 2*v.dir,2)
         if v.damageTextTimer > 0 then
@@ -68,11 +72,11 @@ function player_draw()
             love.graphics.setColor(0.5, 0.5, 0.5, 1)
             love.graphics.rectangle("line", v.body:getX() - player_width / 2, v.body:getY() - player_height / 2, player_width, player_height)
             -- Хитбох
-            local hitbox = player_states[state].frames[spriteIndex].hitbox
+            local hitbox = v.current_state[state].frames[spriteIndex].hitbox
             love.graphics.setColor(0, 1, 0, 1)
             love.graphics.rectangle("line", v.body:getX() + hitbox.x, v.body:getY() + hitbox.y, hitbox.w, hitbox.h)
             -- Хуртбох
-            local hurtbox = player_states[state].frames[spriteIndex].hurtbox
+            local hurtbox = v.current_state[state].frames[spriteIndex].hurtbox
             if hurtbox.active then
                 love.graphics.setColor(1, 0, 0, 1)
                 love.graphics.rectangle("line", v.body:getX() + hurtbox.x * v.dir, v.body:getY() + hurtbox.y, hurtbox.w * v.dir, hurtbox.h)
@@ -95,7 +99,7 @@ function player_update(dt)
 
         player.stateTimer = player.stateTimer + dt
         player.damageTextTimer = player.damageTextTimer - dt
-        if player.stateTimer > player_states[player.state].duration then
+        if player.stateTimer > player.current_state[player.state].duration then
             if player.state == "punch" or player.state == "slide" or player.state == "upper" then 
                 player.state = "idle"
                 player.stateTimer = 0
@@ -201,8 +205,8 @@ function player_update(dt)
         local p1_x = player.body:getX()
         local p1_y = player.body:getY()
         local state = player.state
-        local spriteIndex = math.floor(player.stateTimer / player_states[state].duration * player_states[state].length)
-        local hurtbox = player_states[state].frames[spriteIndex].hurtbox
+        local spriteIndex = math.floor(player.stateTimer / player.current_state[state].duration * player.current_state[state].length)
+        local hurtbox = player.current_state[state].frames[spriteIndex].hurtbox
         if hurtbox.active then
             p1_x = p1_x + hurtbox.x
             p1_y = p1_y + hurtbox.y
@@ -211,8 +215,8 @@ function player_update(dt)
                     local p2_x = other_player.body:getX()
                     local p2_y = other_player.body:getY()
                     local state = other_player.state
-                    local spriteIndex = math.floor(other_player.stateTimer / player_states[state].duration * player_states[state].length)
-                    local hitbox = player_states[state].frames[spriteIndex].hitbox
+                    local spriteIndex = math.floor(other_player.stateTimer / player.current_state[state].duration * player.current_state[state].length)
+                    local hitbox = player.current_state[state].frames[spriteIndex].hitbox
                     p2_x = p2_x + hitbox.x
                     p2_y = p2_y + hitbox.y
     
@@ -242,7 +246,7 @@ end
 ---@param attacker Player
 ---@param defender Player
 function player_hit(attacker, defender)
-    local active_state = player_states[attacker.state]
+    local active_state = attacker.current_state[attacker.state]
     print(attacker.stateTimer, active_state.duration, active_state)
     local active_frame = active_state.frames[ math.floor(attacker.stateTimer / active_state.duration * active_state.length) ]
 

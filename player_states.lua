@@ -1,199 +1,205 @@
 player_states = {}
-player_states["idle"] = {}
-player_states["idle"].duration = 1
-player_states["idle"].length = 1
-player_states["idle"].frames = {}
-player_states["idle"].frames[0] = {} 
-player_states["idle"].frames[0].textures = {} 
-player_states["idle"].frames[0].textures[0] = ASSETS[3].stand[1]
-player_states["idle"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["idle"].frames[0].hurtbox = {active=false}
+for i=1,4 do
+  
+local current_state = {}
+player_states[i] = current_state
+current_state["idle"] = {}
+current_state["idle"].duration = 1
+current_state["idle"].length = 1
+current_state["idle"].frames = {}
+current_state["idle"].frames[0] = {} 
+current_state["idle"].frames[0].textures = {} 
+current_state["idle"].frames[0].textures[0] = ASSETS[i].stand[1]
+current_state["idle"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
+current_state["idle"].frames[0].hurtbox = {active=false}
 
-player_states["stun"] = {}
-player_states["stun"].duration = 1
-player_states["stun"].length = 1
-player_states["stun"].frames = {}
-player_states["stun"].frames[0] = {} 
-player_states["stun"].frames[0].textures = {} 
-player_states["stun"].frames[0].textures[0] = ASSETS[3].fly[1]
-player_states["stun"].frames[0].hitbox = {x=-1500000,y=-30,w=30,h=60}
-player_states["stun"].frames[0].hurtbox = {active=false}
+current_state["stun"] = {}
+current_state["stun"].duration = 1
+current_state["stun"].length = 1
+current_state["stun"].frames = {}
+current_state["stun"].frames[0] = {} 
+current_state["stun"].frames[0].textures = {} 
+current_state["stun"].frames[0].textures[0] = ASSETS[i].fly[1]
+current_state["stun"].frames[0].hitbox = {x=-1500000,y=-30,w=30,h=60}
+current_state["stun"].frames[0].hurtbox = {active=false}
 
-player_states["walk"] = {}
-player_states["walk"].duration = 1
-player_states["walk"].length = 2
-player_states["walk"].frames = {}
-player_states["walk"].frames[0] = {}
-player_states["walk"].frames[0].textures = {} 
-player_states["walk"].frames[0].textures[0] = ASSETS[3].walk[1]
-player_states["walk"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["walk"].frames[0].hurtbox = {active=false}
-player_states["walk"].frames[1] = {} 
-player_states["walk"].frames[1].textures = {} 
-player_states["walk"].frames[1].textures[0] = ASSETS[3].walk[2]
-player_states["walk"].frames[1].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["walk"].frames[1].hurtbox = {active=false}
+current_state["walk"] = {}
+current_state["walk"].duration = 1
+current_state["walk"].length = 2
+current_state["walk"].frames = {}
+current_state["walk"].frames[0] = {}
+current_state["walk"].frames[0].textures = {} 
+current_state["walk"].frames[0].textures[0] = ASSETS[i].walk[1]
+current_state["walk"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
+current_state["walk"].frames[0].hurtbox = {active=false}
+current_state["walk"].frames[1] = {} 
+current_state["walk"].frames[1].textures = {} 
+current_state["walk"].frames[1].textures[0] = ASSETS[i].walk[2]
+current_state["walk"].frames[1].hitbox = {x=-15,y=-30,w=30,h=60}
+current_state["walk"].frames[1].hurtbox = {active=false}
 
-player_states["run"] = {}
-player_states["run"].duration = 0.4
-player_states["run"].length = 4
-player_states["run"].frames = {}
-player_states["run"].frames[0] = {} 
-player_states["run"].frames[0].textures = {} 
-player_states["run"].frames[0].textures[0] = ASSETS[3].run[1]
-player_states["run"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["run"].frames[0].hurtbox = {active=false}
-player_states["run"].frames[1] = {} 
-player_states["run"].frames[1].textures = {} 
-player_states["run"].frames[1].textures[0] = ASSETS[3].run[2]
-player_states["run"].frames[1].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["run"].frames[1].hurtbox = {active=false}
-player_states["run"].frames[2] = {} 
-player_states["run"].frames[2].textures = {} 
-player_states["run"].frames[2].textures[0] = ASSETS[3].run[3]
-player_states["run"].frames[2].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["run"].frames[2].hurtbox = {active=false}
-player_states["run"].frames[3] = {} 
-player_states["run"].frames[3].textures = {} 
-player_states["run"].frames[3].textures[0] = ASSETS[3].run[4]
-player_states["run"].frames[3].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["run"].frames[3].hurtbox = {active=false}
+current_state["run"] = {}
+current_state["run"].duration = 0.4
+current_state["run"].length = 4
+current_state["run"].frames = {}
+current_state["run"].frames[0] = {} 
+current_state["run"].frames[0].textures = {} 
+current_state["run"].frames[0].textures[0] = ASSETS[i].run[1]
+current_state["run"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
+current_state["run"].frames[0].hurtbox = {active=false}
+current_state["run"].frames[1] = {} 
+current_state["run"].frames[1].textures = {} 
+current_state["run"].frames[1].textures[0] = ASSETS[i].run[2]
+current_state["run"].frames[1].hitbox = {x=-15,y=-30,w=30,h=60}
+current_state["run"].frames[1].hurtbox = {active=false}
+current_state["run"].frames[2] = {} 
+current_state["run"].frames[2].textures = {} 
+current_state["run"].frames[2].textures[0] = ASSETS[i].run[3]
+current_state["run"].frames[2].hitbox = {x=-15,y=-30,w=30,h=60}
+current_state["run"].frames[2].hurtbox = {active=false}
+current_state["run"].frames[3] = {} 
+current_state["run"].frames[3].textures = {} 
+current_state["run"].frames[3].textures[0] = ASSETS[i].run[4]
+current_state["run"].frames[3].hitbox = {x=-15,y=-30,w=30,h=60}
+current_state["run"].frames[3].hurtbox = {active=false}
 
-player_states["wallSlide"] = {}
-player_states["wallSlide"].duration = 1
-player_states["wallSlide"].length = 1
-player_states["wallSlide"].frames = {}
-player_states["wallSlide"].frames[0] = {} 
-player_states["wallSlide"].frames[0].textures = {} 
-player_states["wallSlide"].frames[0].textures[0] = ASSETS[3].wallhang[1]
-player_states["wallSlide"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["wallSlide"].frames[0].hurtbox = {active=false}
-player_states["wallSlide"].frames[0].tex_offset = {x=-10,y=0}
+current_state["wallSlide"] = {}
+current_state["wallSlide"].duration = 1
+current_state["wallSlide"].length = 1
+current_state["wallSlide"].frames = {}
+current_state["wallSlide"].frames[0] = {} 
+current_state["wallSlide"].frames[0].textures = {} 
+current_state["wallSlide"].frames[0].textures[0] = ASSETS[i].wallhang[1]
+current_state["wallSlide"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
+current_state["wallSlide"].frames[0].hurtbox = {active=false}
+current_state["wallSlide"].frames[0].tex_offset = {x=-10,y=0}
 
-player_states["punch"] = {}
-player_states["punch"].duration = 0.35
-player_states["punch"].length = 4
-player_states["punch"].frames = {}
-player_states["punch"].frames[0] = {} 
-player_states["punch"].frames[0].textures = {} 
-player_states["punch"].frames[0].textures[0] = ASSETS[3].jab[1]
-player_states["punch"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["punch"].frames[0].hurtbox = {active=false}
-player_states["punch"].frames[1] = {} 
-player_states["punch"].frames[1].textures = {} 
-player_states["punch"].frames[1].textures[0] = ASSETS[3].jab[2]
-player_states["punch"].frames[1].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["punch"].frames[1].hurtbox = {active=true, x=20,y=0,w=30, h=30}
-player_states["punch"].frames[1].damage_vector = {x=100, y=-100}
-player_states["punch"].frames[2] = {} 
-player_states["punch"].frames[2].textures = {} 
-player_states["punch"].frames[2].textures[0] = ASSETS[3].jab[3]
-player_states["punch"].frames[2].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["punch"].frames[2].hurtbox = {active=false}
-player_states["punch"].frames[3] = {} 
-player_states["punch"].frames[3].textures = {} 
-player_states["punch"].frames[3].textures[0] = ASSETS[3].jab[4]
-player_states["punch"].frames[3].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["punch"].frames[3].hurtbox = {active=true, x=20,y=0,w=30, h=30}
-player_states["punch"].frames[3].damage_vector = {x=100, y=-100}
+current_state["punch"] = {}
+current_state["punch"].duration = 0.35
+current_state["punch"].length = 4
+current_state["punch"].frames = {}
+current_state["punch"].frames[0] = {} 
+current_state["punch"].frames[0].textures = {} 
+current_state["punch"].frames[0].textures[0] = ASSETS[i].jab[1]
+current_state["punch"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
+current_state["punch"].frames[0].hurtbox = {active=false}
+current_state["punch"].frames[1] = {} 
+current_state["punch"].frames[1].textures = {} 
+current_state["punch"].frames[1].textures[0] = ASSETS[i].jab[2]
+current_state["punch"].frames[1].hitbox = {x=-15,y=-30,w=30,h=60}
+current_state["punch"].frames[1].hurtbox = {active=true, x=20,y=0,w=30, h=30}
+current_state["punch"].frames[1].damage_vector = {x=100, y=-100}
+current_state["punch"].frames[2] = {} 
+current_state["punch"].frames[2].textures = {} 
+current_state["punch"].frames[2].textures[0] = ASSETS[i].jab[3]
+current_state["punch"].frames[2].hitbox = {x=-15,y=-30,w=30,h=60}
+current_state["punch"].frames[2].hurtbox = {active=false}
+current_state["punch"].frames[3] = {} 
+current_state["punch"].frames[3].textures = {} 
+current_state["punch"].frames[3].textures[0] = ASSETS[i].jab[4]
+current_state["punch"].frames[3].hitbox = {x=-15,y=-30,w=30,h=60}
+current_state["punch"].frames[3].hurtbox = {active=true, x=20,y=0,w=30, h=30}
+current_state["punch"].frames[3].damage_vector = {x=100, y=-100}
 
-player_states["run_punch"] = {}
-player_states["run_punch"].duration = 1
-player_states["run_punch"].length = 1
-player_states["run_punch"].frames = {}
-player_states["run_punch"].frames[0] = {} 
-player_states["run_punch"].frames[0].textures = {} 
-player_states["run_punch"].frames[0].textures[0] = ASSETS[3].shoulder[1]
-player_states["run_punch"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["run_punch"].frames[0].hurtbox = {active=true, x = 20, y = -20, w = 40, h = 40}
-player_states["run_punch"].frames[0].damage_vector = {x=140, y=-200}
+current_state["run_punch"] = {}
+current_state["run_punch"].duration = 1
+current_state["run_punch"].length = 1
+current_state["run_punch"].frames = {}
+current_state["run_punch"].frames[0] = {} 
+current_state["run_punch"].frames[0].textures = {} 
+current_state["run_punch"].frames[0].textures[0] = ASSETS[i].shoulder[1]
+current_state["run_punch"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
+current_state["run_punch"].frames[0].hurtbox = {active=true, x = 20, y = -20, w = 40, h = 40}
+current_state["run_punch"].frames[0].damage_vector = {x=140, y=-200}
 
-player_states["jump"] = {}
-player_states["jump"].duration = 0.2
-player_states["jump"].length = 2
-player_states["jump"].frames = {}
-player_states["jump"].frames[0] = {} 
-player_states["jump"].frames[0].textures = {} 
-player_states["jump"].frames[0].textures[0] = ASSETS[3].jump[1]
-player_states["jump"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["jump"].frames[0].hurtbox = {active=false}
-player_states["jump"].frames[1] = {} 
-player_states["jump"].frames[1].textures = {} 
-player_states["jump"].frames[1].textures[0] = ASSETS[3].jump[2]
-player_states["jump"].frames[1].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["jump"].frames[1].hurtbox = {active=false}
+current_state["jump"] = {}
+current_state["jump"].duration = 0.2
+current_state["jump"].length = 2
+current_state["jump"].frames = {}
+current_state["jump"].frames[0] = {} 
+current_state["jump"].frames[0].textures = {} 
+current_state["jump"].frames[0].textures[0] = ASSETS[i].jump[1]
+current_state["jump"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
+current_state["jump"].frames[0].hurtbox = {active=false}
+current_state["jump"].frames[1] = {} 
+current_state["jump"].frames[1].textures = {} 
+current_state["jump"].frames[1].textures[0] = ASSETS[i].jump[2]
+current_state["jump"].frames[1].hitbox = {x=-15,y=-30,w=30,h=60}
+current_state["jump"].frames[1].hurtbox = {active=false}
 
-player_states["slide"] = {}
-player_states["slide"].duration = 0.35
-player_states["slide"].length = 3
-player_states["slide"].frames = {}
-player_states["slide"].frames[0] = {} 
-player_states["slide"].frames[0].textures = {} 
-player_states["slide"].frames[0].textures[0] = ASSETS[3].slide[1]
-player_states["slide"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["slide"].frames[0].hurtbox = {active=false}
-player_states["slide"].frames[1] = {} 
-player_states["slide"].frames[1].textures = {} 
-player_states["slide"].frames[1].textures[0] = ASSETS[3].slide[2]
-player_states["slide"].frames[1].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["slide"].frames[1].hurtbox = {active=false}
-player_states["slide"].frames[2] = {} 
-player_states["slide"].frames[2].textures = {} 
-player_states["slide"].frames[2].textures[0] = ASSETS[3].slide[3]
-player_states["slide"].frames[2].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["slide"].frames[2].hurtbox = {active=true, x=0,y=0,w=30, h=30}
-player_states["slide"].frames[2].damage_vector = {x=100, y=-300}
+current_state["slide"] = {}
+current_state["slide"].duration = 0.35
+current_state["slide"].length = 3
+current_state["slide"].frames = {}
+current_state["slide"].frames[0] = {} 
+current_state["slide"].frames[0].textures = {} 
+current_state["slide"].frames[0].textures[0] = ASSETS[i].slide[1]
+current_state["slide"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
+current_state["slide"].frames[0].hurtbox = {active=false}
+current_state["slide"].frames[1] = {} 
+current_state["slide"].frames[1].textures = {} 
+current_state["slide"].frames[1].textures[0] = ASSETS[i].slide[2]
+current_state["slide"].frames[1].hitbox = {x=-15,y=-30,w=30,h=60}
+current_state["slide"].frames[1].hurtbox = {active=false}
+current_state["slide"].frames[2] = {} 
+current_state["slide"].frames[2].textures = {} 
+current_state["slide"].frames[2].textures[0] = ASSETS[i].slide[3]
+current_state["slide"].frames[2].hitbox = {x=-15,y=-30,w=30,h=60}
+current_state["slide"].frames[2].hurtbox = {active=true, x=0,y=0,w=30, h=30}
+current_state["slide"].frames[2].damage_vector = {x=100, y=-300}
 
-player_states["sexkick"] = {}
-player_states["sexkick"].duration = 0.2
-player_states["sexkick"].length = 3
-player_states["sexkick"].frames = {}
-player_states["sexkick"].frames[0] = {} 
-player_states["sexkick"].frames[0].textures = {} 
-player_states["sexkick"].frames[0].textures[0] = ASSETS[3].sexkick[1]
-player_states["sexkick"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["sexkick"].frames[0].hurtbox = {active=false}
-player_states["sexkick"].frames[1] = {} 
-player_states["sexkick"].frames[1].textures = {} 
-player_states["sexkick"].frames[1].textures[0] = ASSETS[3].sexkick[2]
-player_states["sexkick"].frames[1].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["sexkick"].frames[1].hurtbox = {active=false}
-player_states["sexkick"].frames[2] = {} 
-player_states["sexkick"].frames[2].textures = {} 
-player_states["sexkick"].frames[2].textures[0] = ASSETS[3].sexkick[3]
-player_states["sexkick"].frames[2].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["sexkick"].frames[2].hurtbox = {active=true, x = 0, y = 0, w = 40, h = 20}
-player_states["sexkick"].frames[2].damage_vector = {x=100, y=-100}
+current_state["sexkick"] = {}
+current_state["sexkick"].duration = 0.2
+current_state["sexkick"].length = 3
+current_state["sexkick"].frames = {}
+current_state["sexkick"].frames[0] = {} 
+current_state["sexkick"].frames[0].textures = {} 
+current_state["sexkick"].frames[0].textures[0] = ASSETS[i].sexkick[1]
+current_state["sexkick"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
+current_state["sexkick"].frames[0].hurtbox = {active=false}
+current_state["sexkick"].frames[1] = {} 
+current_state["sexkick"].frames[1].textures = {} 
+current_state["sexkick"].frames[1].textures[0] = ASSETS[i].sexkick[2]
+current_state["sexkick"].frames[1].hitbox = {x=-15,y=-30,w=30,h=60}
+current_state["sexkick"].frames[1].hurtbox = {active=false}
+current_state["sexkick"].frames[2] = {} 
+current_state["sexkick"].frames[2].textures = {} 
+current_state["sexkick"].frames[2].textures[0] = ASSETS[i].sexkick[3]
+current_state["sexkick"].frames[2].hitbox = {x=-15,y=-30,w=30,h=60}
+current_state["sexkick"].frames[2].hurtbox = {active=true, x = 0, y = 0, w = 40, h = 20}
+current_state["sexkick"].frames[2].damage_vector = {x=100, y=-100}
 
-player_states["ass"] = {}
-player_states["ass"].duration = 1
-player_states["ass"].length = 1
-player_states["ass"].frames = {}
-player_states["ass"].frames[0] = {} 
-player_states["ass"].frames[0].textures = {} 
-player_states["ass"].frames[0].textures[0] = ASSETS[3].ass[1]
-player_states["ass"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["ass"].frames[0].hurtbox = {active=true, x = 0, y = 0, w = 40, h = 40}
-player_states["ass"].frames[0].damage_vector = {x=100, y=-100}
+current_state["ass"] = {}
+current_state["ass"].duration = 1
+current_state["ass"].length = 1
+current_state["ass"].frames = {}
+current_state["ass"].frames[0] = {} 
+current_state["ass"].frames[0].textures = {} 
+current_state["ass"].frames[0].textures[0] = ASSETS[i].ass[1]
+current_state["ass"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
+current_state["ass"].frames[0].hurtbox = {active=true, x = 0, y = 0, w = 40, h = 40}
+current_state["ass"].frames[0].damage_vector = {x=100, y=-100}
 
-player_states["upper"] = {}
-player_states["upper"].duration = 0.24
-player_states["upper"].length = 3
-player_states["upper"].frames = {}
-player_states["upper"].frames[0] = {} 
-player_states["upper"].frames[0].textures = {} 
-player_states["upper"].frames[0].textures[0] = ASSETS[3].uppercut[1]
-player_states["upper"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["upper"].frames[0].hurtbox = {active=false}
-player_states["upper"].frames[1] = {} 
-player_states["upper"].frames[1].textures = {} 
-player_states["upper"].frames[1].textures[0] = ASSETS[3].uppercut[2]
-player_states["upper"].frames[1].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["upper"].frames[1].hurtbox = {active=true, x = 20, y = -20, w = 40, h = 40}
-player_states["upper"].frames[1].damage_vector = {x=100, y=-100}
-player_states["upper"].frames[2] = {} 
-player_states["upper"].frames[2].textures = {} 
-player_states["upper"].frames[2].textures[0] = ASSETS[3].uppercut[3]
-player_states["upper"].frames[2].hitbox = {x=-15,y=-30,w=30,h=60}
-player_states["upper"].frames[2].hurtbox = {active=true, x = 20, y = -50, w = 40, h = 80}
-player_states["upper"].frames[2].damage_vector = {x=100, y=-400}
+current_state["upper"] = {}
+current_state["upper"].duration = 0.24
+current_state["upper"].length = 3
+current_state["upper"].frames = {}
+current_state["upper"].frames[0] = {} 
+current_state["upper"].frames[0].textures = {} 
+current_state["upper"].frames[0].textures[0] = ASSETS[i].uppercut[1]
+current_state["upper"].frames[0].hitbox = {x=-15,y=-30,w=30,h=60}
+current_state["upper"].frames[0].hurtbox = {active=false}
+current_state["upper"].frames[1] = {} 
+current_state["upper"].frames[1].textures = {} 
+current_state["upper"].frames[1].textures[0] = ASSETS[i].uppercut[2]
+current_state["upper"].frames[1].hitbox = {x=-15,y=-30,w=30,h=60}
+current_state["upper"].frames[1].hurtbox = {active=true, x = 20, y = -20, w = 40, h = 40}
+current_state["upper"].frames[1].damage_vector = {x=100, y=-100}
+current_state["upper"].frames[2] = {} 
+current_state["upper"].frames[2].textures = {} 
+current_state["upper"].frames[2].textures[0] = ASSETS[i].uppercut[3]
+current_state["upper"].frames[2].hitbox = {x=-15,y=-30,w=30,h=60}
+current_state["upper"].frames[2].hurtbox = {active=true, x = 20, y = -50, w = 40, h = 80}
+current_state["upper"].frames[2].damage_vector = {x=100, y=-400}
+
+end
