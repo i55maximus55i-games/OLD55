@@ -96,8 +96,11 @@ function player_update(dt)
             if player.state == "jump" then 
                 player.stateTimer = 0.15 
             end
-            if player.state == "idle" or player.state == "walk" or player.state == "run" or player.state == "run_punch" then
+            if player.state == "idle" or player.state == "walk" or player.state == "run" or player.state == "run_punch" or player.state == "ass" then
                 player.stateTimer = 0
+            end
+            if player.state == "sexkick" then
+                player.stateTimer = 0.19
             end
         end
 
@@ -105,13 +108,18 @@ function player_update(dt)
 
         if player.stun < 0 then
             -- ходит/бегит
-            local targetSpeed = left_x * player.maxSpeedWalk
             if player.state == "punch" then left_x = 0 end
             if player.state == "run_punch" or player.state == "slide" then
                 left_x = player.dir
             end
+            if player.state == "ass" then
+                left_x = 0
+            end
+            local targetSpeed = left_x * player.maxSpeedWalk
             if math.abs(left_x) > 0.1 then
                 if player.state == "slide" then
+                elseif player.state == "sexkick" then
+                elseif player.state == "ass" then
                 else 
                     if player.state ~= "punch" then 
                         if left_x > 0 then player.dir = 1 else player.dir = -1 end
@@ -132,7 +140,13 @@ function player_update(dt)
                 end
             else
                 if player.state ~= "punch" then 
-                    if player.isJump then player.state = "jump" else 
+                    if player.isJump then
+                        if player.state == "sexkick" then
+                        elseif player.state == "ass" then
+                        else
+                            player.state = "jump" 
+                        end
+                    else 
                         player.state = "idle" 
                         player.stateTimer = 0
                     end
@@ -167,6 +181,9 @@ function player_update(dt)
                     player.stateTimer = 0
                 end
             end
+        else
+            player.state = "stun"
+            player.stateTimer = 0
         end
 
         -- Проверка хитохуртобоксов
@@ -228,6 +245,7 @@ end
 function player_control(joystick, butt, pressed)
     --- @type Player
     local player = players[joystick]
+    local left_x, left_y, right_x, right_y = joystick:getAxes()
 
     if not player then return end
     
@@ -273,9 +291,11 @@ function player_control(joystick, butt, pressed)
         if pressed then
             if not player.isJump then
                 -- Slide
-                local left_x, left_y, right_x, right_y = joystick:getAxes()
                 if left_y > 0.2 then
                     player.state = "slide"
+                    player.stateTimer = 0
+                elseif left_y < -0.2 then
+                    player.state = "upper"
                     player.stateTimer = 0
                 else 
                     -- Jab
@@ -289,6 +309,20 @@ function player_control(joystick, butt, pressed)
                         player.stateTimer = 0
                         player.body:applyLinearImpulse(0, -140)
                     end
+                end
+            else
+                if left_y > 0.2 then
+                    -- Атака вниз 
+                    player.state = "ass"
+                    player.stateTimer = 0
+                elseif left_y < -0.2 then
+                    -- Атака вверх
+                    player.state = "upper"
+                    player.stateTimer = 0
+                else
+                    -- атака простая
+                    player.state = "sexkick"
+                    player.stateTimer = 0
                 end
             end
         end

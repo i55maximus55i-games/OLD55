@@ -20,6 +20,14 @@ function beginContact(a, b, coll)
 				player.state = "run"
 				player.stateTimer = 0
 			end
+			if player.state == "sexkick" then
+				player.state = "idle"
+				player.stateTimer = 0
+			end
+			if player.state == "ass" then
+				player.state = "idle"
+				player.stateTimer = 0
+			end
 		end
 		-- Коллайдеры для прилипания к платформам
 		if other.type == "platform_left" then
@@ -54,7 +62,7 @@ function endContact(a, b, coll)
 		-- Игрок ушёл с платформы, обновляем доступность прыжков
 		if other.type == "platform_up" then 
 			if player.state == "run_punch" then
-				
+			elseif player.state == "sexkick" then
 			else 
 				player.isJump = true
 				if player.jumpCounter == 0 then player.stateTimer = 0.15 else player.stateTimer = 0 end
