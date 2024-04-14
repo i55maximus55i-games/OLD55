@@ -15,6 +15,7 @@ function beginContact(a, b, coll)
 		-- Игрок стоит на платформе, обновляем доступность прыжков
 		if other.type == "platform_up" then 
 			player.jumpCounter = 0
+			player.isJump = false
 		end
 		-- Коллайдеры для прилипания к платформам
 		if other.type == "platform_left" then
@@ -48,6 +49,8 @@ function endContact(a, b, coll)
 
 		-- Игрок ушёл с платформы, обновляем доступность прыжков
 		if other.type == "platform_up" then 
+			player.isJump = true
+			if player.jumpCounter == 0 then player.stateTimer = 0.15 else player.stateTimer = 0 end
 			player.jumpCounter = 1
 		end
 		-- Коллайдеры для прилипания к платформам
