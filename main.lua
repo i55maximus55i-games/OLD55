@@ -1,5 +1,7 @@
 love.graphics.setDefaultFilter("nearest", "nearest")
 
+require 'random_objects.o'
+
 local class = require("Luaoop").class
 
 require 'load_assets'
@@ -30,6 +32,7 @@ end
 -- Callback function used to update the state of the game every frame.
 function love.update(dt)
     player_update(dt)
+    URO(dt)
     b2d_world:update(dt)
 end
 
@@ -38,6 +41,7 @@ function love.draw()
     love.graphics.scale(1.5,1.5)
     love.graphics.draw(background, 0, 0, 0, 1920 / background:getWidth(), 1080 / background:getHeight())
     platform_draw()
+    DRO()
     player_draw()
 end
 
@@ -47,5 +51,19 @@ function love.quit()
 end
 
 function love.joystickadded(joystick)
-    player_create(joystick, 40, 0)
+    -- player_create(joystick, 40, 0)
+end
+
+
+function REMOVE_PLAYER( joystick )
+    for i,v in pairs(players) do
+        print(joystick, i)
+        if joystick == i then
+            players[joystick] = nil
+        end
+    end
+end
+
+function love.joystickremoved( joystick )
+    REMOVE_PLAYER(joystick)
 end

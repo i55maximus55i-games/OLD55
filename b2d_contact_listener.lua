@@ -32,6 +32,11 @@ function beginContact(a, b, coll)
 			player.wallstick = 1
 		end
 	end
+
+	local ad = a:getUserData()
+	local bd = b:getUserData()
+	if (ad.type == "random" and ad.collide) then print("case ab") ad.collide(a,b) end
+	if (bd.type == "random" and bd.collide) then print("case ba") bd.collide(b,a) end
 end
 
 function endContact(a, b, coll)
